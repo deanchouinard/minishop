@@ -10,8 +10,8 @@ defmodule Minishop.Product do
     timestamps
   end
 
-  @required_fields ~w(title description image_url price)
-  @optional_fields ~w()
+  @required_fields ~w(title)
+  @optional_fields ~w(description image_url price)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

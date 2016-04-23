@@ -3,6 +3,13 @@
   <p class="lead">A productive web framework that<br />does not compromise speed and maintainability.</p>
 </div>
 
+<%= form_for @conn, page_path(@conn, :index), [as: :session], fn f -> %>
+  <div class="form-group">
+    <%= text_input f, :product, placeholder: "Product", class: "form-control" %>
+  </div>
+  <%= submit "Add Product", class: "btn btn-primary" %>
+<% end %>
+
 <%= link "Add", to: page_path(@conn, :index) %>
 <div class="row marketing">
   <div class="col-lg-6">

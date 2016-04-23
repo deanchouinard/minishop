@@ -16,8 +16,10 @@ defmodule Minishop.Cart do
     #    cart_id = "100"
     conn = put_session(conn, :cart_id, cart_id)
     conn = assign(conn, :cart, cart_id)
-    # IO.inspect(conn)
-    # conn
+    IO.inspect(conn)
+     conn
   end
+
+    
 end
 

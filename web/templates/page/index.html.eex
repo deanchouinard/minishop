@@ -2,7 +2,7 @@
   <h2><%= gettext "Welcome to %{name}", name: "Minishop" %></h2>
   <p class="lead">A productive web framework that<br />does not compromise speed and maintainability.</p>
 </div>
-
+<%= @cart %>
 <%= form_for @conn, page_path(@conn, :index), [as: :session], fn f -> %>
   <div class="form-group">
     <%= text_input f, :product, placeholder: "Product", class: "form-control" %>

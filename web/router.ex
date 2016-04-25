@@ -22,6 +22,8 @@ defmodule Minishop.Router do
     get "/session/clear", SessionController, :clear
 
     get "/store", StoreController, :index
+    get "/session/add_cart", SessionController, :add_to_cartx
+
   end
 
   scope "/manage", Minishop do

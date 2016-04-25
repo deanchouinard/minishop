@@ -12,9 +12,22 @@ defmodule Minishop.SessionController do
 
   end
 
+  def add_to_cart(conn, %{"product" => prod}) do
+    add_prod_to_cart(conn, prod)
+    redirect(conn, to: store_path(conn, :index))
+  end
+
   def clear(conn, _params) do
     conn = Plug.Conn.configure_session(conn, drop: true)
     redirect(conn, to: page_path(conn, :index))
+  end
+
+  defp add_prod_to_cart(conn, prod) do
+
+    cart = get_session(conn, :cart) || []
+    # conn = assign(conn, :product, prod)
+    cart = List.insert_at(cart, -1, prod)
+    conn = put_session(conn, :cart, cart)
   end
 
 end

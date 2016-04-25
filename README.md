@@ -1,21 +1,19 @@
 # Minishop
+Some ecommerce explorations.
 
-To start your Phoenix app:
+Used this article, Implementing a Web Shopping Cart, by Chris Baron and Bob
+Weil, back in 1996 as the basis of an online travel reservations system
+implemented in Visual Foxpro using the West Wind Web Connection DLL to interface
+with the Windows NT IIS.
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  * Install Node.js dependencies with `npm install`
-  * Start Phoenix endpoint with `mix phoenix.server`
+http://www.drdobbs.com/web-development/implementing-a-web-shopping-cart/184409959?pgno=5
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+or
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
+http://collaboration.cmc.ec.gc.ca/science/rpn/biblio/ddj/Website/articles/DDJ/1996/9609/9609h/9609h.htm
 
-## Learn more
+Now implementing some of the same stuff with Elixir and Phoenix.
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: http://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
-# minishop
+Using the Depot application from "Agile Web Development with Rails, 3rd Edition," as a guide this time.
+
+

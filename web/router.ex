@@ -20,6 +20,8 @@ defmodule Minishop.Router do
     get "/", PageController, :index
     post "/", SessionController, :add
     get "/session/clear", SessionController, :clear
+
+    get "/store", StoreController, :index
   end
 
   scope "/manage", Minishop do

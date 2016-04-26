@@ -1,6 +1,8 @@
 defmodule Minishop.StoreController do
   use Minishop.Web, :controller
 
+  plug :put_layout, "store.html"
+
   alias Minishop.Product
   
   def index(conn, _params) do

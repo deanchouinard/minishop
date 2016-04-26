@@ -12,8 +12,8 @@ defmodule Minishop.SessionController do
 
   end
 
-  def add_to_cart(conn, %{"product" => prod}) do
-    add_prod_to_cart(conn, prod)
+  def add_to_cart(conn, %{"title" => prod}) do
+    conn = add_prod_to_cart(conn, prod)
     redirect(conn, to: store_path(conn, :index))
   end
 
@@ -27,6 +27,7 @@ defmodule Minishop.SessionController do
     cart = get_session(conn, :cart) || []
     # conn = assign(conn, :product, prod)
     cart = List.insert_at(cart, -1, prod)
+#    IO.inspect(cart)
     conn = put_session(conn, :cart, cart)
   end
 

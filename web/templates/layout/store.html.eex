@@ -27,7 +27,10 @@
 
       <div id="columns">
         <div id="side">
-          Side
+          <a href="http://www....">Home</a><br> 
+          <a href="http://www....">FAQ</a><br> 
+          <a href="http://www....">News</a><br> 
+          <a href="http://www....">Contact</a><br> 
         </div>
         <div id="main">
           <%= render @view_module, @view_template, assigns %>

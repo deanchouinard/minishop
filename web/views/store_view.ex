@@ -5,4 +5,8 @@ defmodule Minishop.StoreView do
 
   alias Monetized.Money
 
+  def decimal_to_currency(val) do
+    Money.to_string(Money.make(val, [currency: "USD"]), [currency_symbol: true])
+  end
+
 end

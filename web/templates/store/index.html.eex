@@ -6,7 +6,7 @@
     <tr>
       <th>Title</th>
       <th>Description</th>
-      <th>Image url</th>
+      <!--      <th>Image url</th> -->
       <th>Price</th>
 
       <th></th>
@@ -17,8 +17,8 @@
     <tr>
       <td><%= product.title %></td>
       <td><%= product.description %></td>
-      <td><%= product.image_url %></td>
-      <td><%= Money.to_string(Money.make(product.price, [currency: "USD"]), [currency_symbol: true]) %></td>
+      <!--      <td><%= product.image_url %></td> -->
+      <td><%= decimal_to_currency(product.price) %></td>
 
       <td class="text-right">
         <%= link "Add to Cart", to: session_path(@conn, :add_to_cart,

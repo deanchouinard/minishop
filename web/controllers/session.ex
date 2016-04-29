@@ -23,12 +23,14 @@ defmodule Minishop.SessionController do
   end
 
   defp add_prod_to_cart(conn, prod) do
-
-    cart = get_session(conn, :cart) || []
+    prod = %Minishop.Cart.Item{prod_id: 9, qty: 1}
+#    cart = get_session(conn, :cart) || []
+    cart = conn.assigns.cart
     # conn = assign(conn, :product, prod)
     cart = List.insert_at(cart, -1, prod)
-#    IO.inspect(cart)
-    conn = put_session(conn, :cart, cart)
+    IO.inspect(cart)
+   # conn = put_session(conn, :cart, cart)
+    conn = assign(conn, :cart, cart)
   end
 
 end

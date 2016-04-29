@@ -1,7 +1,9 @@
 defmodule Minishop.Cart do
   import Plug.Conn
-
-  defstruct prod_id: nil, qty: nil
+  
+  defmodule Item do
+    defstruct prod_id: nil, qty: nil
+  end
   
   def init(opts) do
     Keyword.fetch!(opts, :repo)
@@ -10,13 +12,13 @@ defmodule Minishop.Cart do
   def call(conn, repo) do
     case cart = get_session(conn, :cart) do
       nil ->
-        cart = [%Cart{}]
+        cart = [%Item{}]
       _ ->
-        cart 
+        cart
     end
 
     #    cart_id = "100"
-    conn = put_session(conn, :cart, cart)
+#    conn = put_session(conn, :cart, cart)
     conn = assign(conn, :cart, cart)
   #  IO.inspect(conn)
      conn

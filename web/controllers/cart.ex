@@ -12,16 +12,19 @@ defmodule Minishop.Cart do
   def call(conn, repo) do
     case cart = get_session(conn, :cart) do
       nil ->
-        cart = [%Item{}]
+        cart = []
+        # cart = [%{prod_id: 12}]
+#        cart = [%Minishop.Cart.Item{}]
       _ ->
         cart
     end
 
     #    cart_id = "100"
-#    conn = put_session(conn, :cart, cart)
+    conn = put_session(conn, :cart, cart)
     conn = assign(conn, :cart, cart)
-  #  IO.inspect(conn)
-     conn
+    #  IO.inspect(conn)
+    IO.inspect(cart)
+    conn
   end
 
     

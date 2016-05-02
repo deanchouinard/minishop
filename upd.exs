@@ -1,3 +1,7 @@
+#
+# Update a list of Maps using higher-order functions
+#
+
 defmodule Upd do
   def prod_exists(cart, prod) do
     IO.puts "prod exixts"
@@ -28,7 +32,28 @@ prod = %{prod_id: 8, qty: 1}
 cart = List.insert_at(cart, -1, prod)
 prod = %{prod_id: 9, qty: 1}
 
-cart = Upd.update_prod(cart, prod.prod_id, &Map.put(&1, :qty, 7))
+index = Enum.find_index(cart, fn(x) -> x.prod_id == prod.prod_id end)
+IO.puts "Index:"
+IO.inspect(index)
+item = Enum.fetch!(cart, index)
+IO.puts "item"
+IO.inspect(item)
+item = Map.update!(item, :qty, &(&1 + prod.qty))
+IO.puts "item"
+IO.inspect(item)
+cart = List.replace_at(cart, index, item)
+
+IO.puts "=== not found ==="
+
+case index = Enum.find_index(cart, fn(x) -> x.prod_id == 8 end) do
+  nil ->
+    IO.puts "Index:"
+    IO.inspect(index)
+  _ ->
+    IO.puts "Index found: #{index}"
+end
+
+# cart = Upd.update_prod(cart, prod.prod_id, &Map.put(&1, :qty, 7))
 
 # case Upd.prod_exists(cart, prod) do
 #   cart -> cart

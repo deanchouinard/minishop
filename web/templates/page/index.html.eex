@@ -17,4 +17,5 @@
   <%= submit "Add Product", class: "btn btn-primary" %>
 <% end %>
 
+<a href="http://localhost:4000/store">Store</a><br> 
 <%= link "Clear Session", to: session_path(@conn, :clear) %>

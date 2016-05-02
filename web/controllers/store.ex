@@ -7,6 +7,9 @@ defmodule Minishop.StoreController do
   
   def index(conn, _params) do
     products = Repo.all(Product)
+
+    cart = conn.assigns.cart
+
     render(conn, "index.html", products: products)
   end
 end

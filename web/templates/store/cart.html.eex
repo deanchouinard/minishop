@@ -1,0 +1,18 @@
+<h3>Cart</h3>
+<table>
+  <thead>
+    <tr>
+      <th> Prod ID </th>
+      <th> Qty </th>
+      <th> Price </th>
+    </tr>
+  </thead>
+  <tbody>
+  <%= for item <- @cart do %>
+    <tr>
+      <td><b><%= item.prod_id %></b></td>
+      <td><b><%= item.qty %></b></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

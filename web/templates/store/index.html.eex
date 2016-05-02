@@ -33,19 +33,4 @@
 
 <%= link "New product", to: product_path(@conn, :new) %>
 
-<table>
-  <thead>
-    <tr>
-      <th> Prod ID</th>
-      <th> Qty</th>
-    </tr>
-  </thead>
-  <tbody>
-  <%= for item <- @cart do %>
-    <tr>
-      <td><b><%= item.prod_id %></b></td>
-      <td><b><%= item.qty %></b></td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
+<%= render "cart.html", cart: @cart %>

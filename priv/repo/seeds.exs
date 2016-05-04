@@ -20,6 +20,11 @@ changeset = Product.changeset(%Product{}, product_params)
 Repo.get_by(Product, title: "First Product") ||
   Repo.insert!(changeset)
 
+product_params = %{title: "Second Product", description: "The second product",
+  image_url: "https://localhost/first_product.jpg", price: 123.45}
+changeset = Product.changeset(%Product{}, product_params)
+Repo.get_by(Product, title: "Second Product") ||
+  Repo.insert!(changeset)
 
 # alias Todo.Repo
 # alias Todo.Priority

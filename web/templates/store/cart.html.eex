@@ -4,14 +4,17 @@
     <tr>
       <th> Prod ID </th>
       <th> Qty </th>
+      <th> Title </th>
       <th> Price </th>
     </tr>
   </thead>
   <tbody>
-  <%= for item <- @cart do %>
+  <%= for item <- @dcart do %>
     <tr>
       <td><b><%= item.prod_id %></b></td>
       <td><b><%= item.qty %></b></td>
+      <td><b><%= item.title %></b></td>
+      <td><b><%= decimal_to_currency(item.price) %></b></td>
     </tr>
   <% end %>
   </tbody>

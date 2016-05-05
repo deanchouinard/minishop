@@ -16,7 +16,8 @@ defmodule Minishop.StoreController do
         where: p.id == ^i.prod_id,
         select: p.title) }
 
-    dcart = Enum.reduce(cart, [], &conv_cart/2)
+      dcart = Enum.reduce(cart, [], &conv_cart/2)
+      conn = assign(conn, :dcart, dcart)
 
     IO.puts("***dcart***")
     IO.inspect(dcart)
@@ -27,9 +28,9 @@ defmodule Minishop.StoreController do
   defp conv_cart(item, dcart) do
     qcart = Repo.one (from p in Product,
         where: p.id == ^item.prod_id,
-        select: {p.title, p.price} )
+        select: %{prod_id: p.id, title: p.title, price: p.price} )
 
-    dcart = List.insert_at(dcart, -1, Tuple.append(qcart, item.qty) )
+    dcart = List.insert_at(dcart, -1, Map.put_new(qcart, :qty , item.qty) )
   end
 
 end

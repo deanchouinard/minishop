@@ -32,6 +32,11 @@
           <a href="http://www....">News</a><br> 
           <a href="http://www....">Contact</a><br> 
           <a href="http://localhost:4000/store">Store</a><br> 
+
+          <small>
+          <%= render @view_module, "cart.html", dcart: @dcart %>
+          </small>
+
         </div>
         <div id="main">
           <%= render @view_module, @view_template, assigns %>

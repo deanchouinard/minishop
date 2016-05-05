@@ -33,4 +33,4 @@
 
 <%= link "New product", to: product_path(@conn, :new) %>
 
-<%= render "cart.html", cart: @cart %>
+<%= render "cart.html", dcart: @dcart %>

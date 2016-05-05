@@ -19,3 +19,5 @@
   <% end %>
   </tbody>
 </table>
+  <p>Total:</p>
+  <%= decimal_to_currency(cart_total(@dcart)) %>

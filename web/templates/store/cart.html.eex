@@ -21,3 +21,4 @@
 </table>
   <p>Total:</p>
   <%= decimal_to_currency(cart_total(@dcart)) %>
+<%= link "Clear Session", to: session_path(@conn, :clear), class: "btn btn-default btn-xs"  %>

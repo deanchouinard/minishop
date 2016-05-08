@@ -25,7 +25,8 @@
 
   <div class="form-group">
     <%= label f, :pay_type, class: "control-label" %>
-    <%= text_input f, :pay_type, class: "form-control" %>
+    <%= select f, :pay_type, @pay_types, class: "form-control",
+      prompt: "Choose a pay type" %>
     <%= error_tag f, :pay_type %>
   </div>
 

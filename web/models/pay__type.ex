@@ -21,4 +21,13 @@ defmodule Minishop.Pay_Type do
     model
     |> cast(params, @required_fields, @optional_fields)
   end
+
+  def alphabetical(query) do
+    from p in query, order_by: p.code
+  end
+
+  def code_and_ids(query) do
+    from p in query, select: {p.code, p.id}
+  end
+
 end

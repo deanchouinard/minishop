@@ -5,12 +5,12 @@ defmodule Minishop.Order do
     field :name, :string
     field :address, :string
     field :email, :string
-    field :pay_type, :string
+    belongs_to :pay_type, Minishop.Pay_Type
 
     timestamps
   end
 
-  @required_fields ~w(name address email pay_type)
+  @required_fields ~w(name address email )
   @optional_fields ~w()
 
   @doc """

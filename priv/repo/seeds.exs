@@ -12,6 +12,8 @@
 
 alias Minishop.Repo
 alias Minishop.Product
+alias Minishop.Pay_Type
+
 import Ecto.Query
 
 product_params = %{title: "First Product", description: "The first product",
@@ -25,6 +27,18 @@ product_params = %{title: "Second Product", description: "The second product",
 changeset = Product.changeset(%Product{}, product_params)
 Repo.get_by(Product, title: "Second Product") ||
   Repo.insert!(changeset)
+
+# pay_types
+
+Repo.get_by(Pay_Type, code: "cc") ||
+  Repo.insert!(%Pay_Type{code: "cc", description: "Credit card"})
+
+Repo.get_by(Pay_Type, code: "check") ||
+  Repo.insert!(%Pay_Type{code: "check", description: "Check"})
+
+Repo.get_by(Pay_Type, code: "po") ||
+  Repo.insert!(%Pay_Type{code: "po", description: "Purchase order"})
+
 
 # alias Todo.Repo
 # alias Todo.Priority

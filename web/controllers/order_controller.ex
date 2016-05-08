@@ -5,6 +5,8 @@ defmodule Minishop.OrderController do
 
   plug :scrub_params, "order" when action in [:create, :update]
 
+  plug :load_pay_types when action in [:new, :create, :edit, :update]
+
   def index(conn, _params) do
     orders = Repo.all(Order)
     render(conn, "index.html", orders: orders)
@@ -64,4 +66,14 @@ defmodule Minishop.OrderController do
     |> put_flash(:info, "Order deleted successfully.")
     |> redirect(to: order_path(conn, :index))
   end
+
+  defp load_pay_types(conn, _) do
+    query =
+      Pay_Type
+      |> Pay_Type.alphabetical
+      |> Pay_Type.code_and_ids
+    pay_types = Repo.all query
+    assign(conn, :pay_types, pay_types)
+  end
+
 end

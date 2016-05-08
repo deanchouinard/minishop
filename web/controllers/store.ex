@@ -36,8 +36,11 @@ defmodule Minishop.StoreController do
     dcart = Enum.reduce(cart, [], &conv_cart/2)
 
     changeset = Order.changeset(%Order{})
-    render conn, "checkout.html", changeset: changeset,
+    render conn, Minishop.OrderView, "new.html", changeset: changeset,
       action: order_path(conn, :create), dcart: dcart
+
+    # render conn, "checkout.html", changeset: changeset,
+    #   action: order_path(conn, :create), dcart: dcart
 
     # conn
     # |> put_flash(:info, "checkout clicked")

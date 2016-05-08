@@ -1,0 +1,32 @@
+<h2>Listing line items</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Order</th>
+      <th>Quantity</th>
+      <th>Total price</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for line__item <- @line_items do %>
+    <tr>
+      <td><%= line__item.product_id %></td>
+      <td><%= line__item.order_id %></td>
+      <td><%= line__item.quantity %></td>
+      <td><%= line__item.total_price %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: line__item_path(@conn, :show, line__item), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: line__item_path(@conn, :edit, line__item), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: line__item_path(@conn, :delete, line__item), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New line  item", to: line__item_path(@conn, :new) %>

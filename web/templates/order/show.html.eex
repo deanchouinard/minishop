@@ -1,0 +1,28 @@
+<h2>Show order</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @order.name %>
+  </li>
+
+  <li>
+    <strong>Address:</strong>
+    <%= @order.address %>
+  </li>
+
+  <li>
+    <strong>Email:</strong>
+    <%= @order.email %>
+  </li>
+
+  <li>
+    <strong>Pay type:</strong>
+    <%= @order.pay_type %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: order_path(@conn, :edit, @order) %>
+<%= link "Back", to: order_path(@conn, :index) %>

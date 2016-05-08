@@ -1,0 +1,6 @@
+<h2>New line  item</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: line__item_path(@conn, :create) %>
+
+<%= link "Back", to: line__item_path(@conn, :index) %>

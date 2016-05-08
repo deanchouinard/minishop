@@ -24,6 +24,7 @@ defmodule Minishop.Router do
     get "/session/add_cart/:id", SessionController, :add_to_cart
 
     get "/store", StoreController, :index
+    get "/store/checkout", StoreController, :checkout
 
   end
 
@@ -31,6 +32,9 @@ defmodule Minishop.Router do
     pipe_through :browser
 
     resources "/products", ProductController
+    resources "/orders", OrderController
+    resources "/line_items", Line_ItemController
+
   end
 
   # Other scopes may use custom stacks.

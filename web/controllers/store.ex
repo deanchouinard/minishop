@@ -5,6 +5,7 @@ defmodule Minishop.StoreController do
   plug :put_layout, "store.html"
 
   alias Minishop.Product
+  alias Minishop.Order
   
   def index(conn, _params) do
     products = Repo.all(Product)
@@ -23,6 +24,24 @@ defmodule Minishop.StoreController do
     IO.inspect(dcart)
 
     render(conn, "index.html", products: products)
+  end
+
+  def checkout(conn, params) do
+
+  #    IO.puts "****checkout"
+  #  IO.inspect(params)
+    IO.inspect(conn.assigns)
+
+    cart = conn.assigns.cart
+    dcart = Enum.reduce(cart, [], &conv_cart/2)
+
+    changeset = Order.changeset(%Order{})
+    render conn, "checkout.html", changeset: changeset,
+      action: order_path(conn, :create), dcart: dcart
+
+    # conn
+    # |> put_flash(:info, "checkout clicked")
+    # |> redirect(to: store_path(conn, :index))
   end
 
   defp conv_cart(item, dcart) do

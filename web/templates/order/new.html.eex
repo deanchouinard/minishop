@@ -1,6 +1,6 @@
 <h2>New order</h2>
 
-<%= render "form.html", changeset: @changeset,
+<%= render "form.html", changeset: @changeset, pay_types: @pay_types,
                         action: order_path(@conn, :create) %>
 
-<%= link "Back", to: order_path(@conn, :index) %>
+<%= link "Back", to: store_path(@conn, :index) %>

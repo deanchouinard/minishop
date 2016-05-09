@@ -47,7 +47,7 @@ defmodule Minishop.StoreController do
     # |> redirect(to: store_path(conn, :index))
   end
 
-  defp conv_cart(item, dcart) do
+  def conv_cart(item, dcart) do
     qcart = Repo.one (from p in Product,
         where: p.id == ^item.prod_id,
         select: %{prod_id: p.id, title: p.title, price: p.price} )

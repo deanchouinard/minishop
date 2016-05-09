@@ -2,6 +2,7 @@ defmodule Minishop.OrderController do
   use Minishop.Web, :controller
 
   alias Minishop.Order
+  alias Minishop.Pay_Type
 
   plug :scrub_params, "order" when action in [:create, :update]
 
@@ -13,6 +14,9 @@ defmodule Minishop.OrderController do
   end
 
   def new(conn, _params) do
+    cart = conn.assigns.cart
+    dcart = Enum.reduce(cart, [], &Minishop.StoreController.conv_cart/2)
+
     changeset = Order.changeset(%Order{})
     render(conn, "new.html", changeset: changeset)
   end
@@ -67,7 +71,7 @@ defmodule Minishop.OrderController do
     |> redirect(to: order_path(conn, :index))
   end
 
-  defp load_pay_types(conn, _) do
+  def load_pay_types(conn, _) do
     query =
       Pay_Type
       |> Pay_Type.alphabetical

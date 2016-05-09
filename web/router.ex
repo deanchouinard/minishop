@@ -25,6 +25,8 @@ defmodule Minishop.Router do
 
     get "/store", StoreController, :index
     get "/store/checkout", StoreController, :checkout
+    get "/orders/new", OrderController, :new
+    get "/orders/create", OrderController, :create
 
   end
 
@@ -32,7 +34,7 @@ defmodule Minishop.Router do
     pipe_through :browser
 
     resources "/products", ProductController
-    resources "/orders", OrderController
+#    resources "/orders", OrderController
     resources "/line_items", Line_ItemController
 
   end

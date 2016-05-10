@@ -25,10 +25,23 @@ defmodule Minishop.OrderController do
     changeset = Order.changeset(%Order{}, order_params)
 
     case Repo.insert(changeset) do
-      {:ok, _order} ->
+      {:ok, order} ->
+
+        cart = conn.assigns.cart
+
+        for i <- cart,  do
+          prod = Repo.one (from p in Product,
+            where: p.id == ^i.prod_id
+            select: %{ id: p.id, title: p.title, price: p.price} )
+
+          item_attrs = %{prod_id: prod.id, qty: i.qty, price: prod.price}
+          item = Ecto.build.assoc(order, :line_items, item_attrs)
+          item = Repo.insert!(item)
+        end
+
         conn
         |> put_flash(:info, "Order created successfully.")
-        |> redirect(to: order_path(conn, :index))
+        |> redirect(to: store_path(conn, :index))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end

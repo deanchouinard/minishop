@@ -38,5 +38,6 @@ config :minishop, Minishop.Repo,
   username: "postgres",
   password: "postgres",
   database: "minishop_dev",
-  hostname: "localhost",
+#  hostname: "localhost",
+  hostname: "dbserver",
   pool_size: 10

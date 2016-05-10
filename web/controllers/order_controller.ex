@@ -3,6 +3,10 @@ defmodule Minishop.OrderController do
 
   alias Minishop.Order
   alias Minishop.Pay_Type
+  alias Minishop.Product
+  alias Minishop.Line_Item
+
+  import Ecto.Query
 
   plug :scrub_params, "order" when action in [:create, :update]
 
@@ -29,19 +33,19 @@ defmodule Minishop.OrderController do
 
         cart = conn.assigns.cart
 
-        for i <- cart,  do
+        for i <- cart  do
           prod = Repo.one (from p in Product,
-            where: p.id == ^i.prod_id
+            where: p.id == ^i.prod_id,
             select: %{ id: p.id, title: p.title, price: p.price} )
 
-          item_attrs = %{prod_id: prod.id, qty: i.qty, price: prod.price}
-          item = Ecto.build.assoc(order, :line_items, item_attrs)
+          item_attrs = %{product_id: prod.id, quantity: i.qty, total_price: prod.price}
+          item = Ecto.build_assoc(order, :line_items, item_attrs)
           item = Repo.insert!(item)
         end
 
         conn
         |> put_flash(:info, "Order created successfully.")
-        |> redirect(to: store_path(conn, :index))
+        |> redirect(to: order_path(conn, :show, order.id))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end

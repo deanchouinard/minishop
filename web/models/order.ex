@@ -5,6 +5,7 @@ defmodule Minishop.Order do
     field :name, :string
     field :address, :string
     field :email, :string
+    has_many :line_items, Minishop.Line_Item
     belongs_to :pay_type, Minishop.Pay_Type
 
     timestamps

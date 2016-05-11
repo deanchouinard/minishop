@@ -11,4 +11,7 @@ defmodule Minishop.OrderView do
       select: p.description
   end
 
+  def display_line_items(id) do
+
+  end
 end

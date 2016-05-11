@@ -21,6 +21,11 @@
     <strong>Pay type:</strong>
     <%= display_pay_type(@order.pay_type_id) %>
   </li>
+  
+  <li>
+    <strong>Line items:</strong>
+    <%= display_line_items(@order.id) %>
+  </li>
 
 </ul>
 

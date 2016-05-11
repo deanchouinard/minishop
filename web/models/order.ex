@@ -11,7 +11,7 @@ defmodule Minishop.Order do
     timestamps
   end
 
-  @required_fields ~w(name address email )
+  @required_fields ~w(name address email pay_type_id)
   @optional_fields ~w()
 
   @doc """

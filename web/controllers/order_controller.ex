@@ -28,6 +28,8 @@ defmodule Minishop.OrderController do
   def create(conn, %{"order" => order_params}) do
     changeset = Order.changeset(%Order{}, order_params)
 
+    IO.inspect(changeset)
+
     case Repo.insert(changeset) do
       {:ok, order} ->
 

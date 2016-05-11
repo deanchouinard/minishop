@@ -19,10 +19,10 @@
 
   <li>
     <strong>Pay type:</strong>
-    <%= @order.pay_type %>
+    <%= display_pay_type(@order.pay_type_id) %>
   </li>
 
 </ul>
 
-<%= link "Edit", to: order_path(@conn, :edit, @order) %>
-<%= link "Back", to: order_path(@conn, :index) %>
+<%= # link "Edit", to: order_path(@conn, :edit, @order) %>
+<%= link "Back", to: store_path(@conn, :index) %>

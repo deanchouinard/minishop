@@ -55,7 +55,10 @@ defmodule Minishop.OrderController do
 
   def show(conn, %{"id" => id}) do
     order = Repo.get!(Order, id)
-    render(conn, "show.html", order: order)
+    line_items = Repo.all from i in Line_Item,
+      where: i.order_id == ^id
+
+    render(conn, "show.html", order: order, line_items: line_items)
   end
 
   def edit(conn, %{"id" => id}) do

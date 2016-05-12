@@ -3,6 +3,11 @@
 <ul>
 
   <li>
+    <strong>Order #</strong>
+    <%= @order.id %>
+  </li>
+
+  <li>
     <strong>Name:</strong>
     <%= @order.name %>
   </li>
@@ -26,6 +31,32 @@
     <strong>Line items:</strong>
     <%= display_line_items(@order.id) %>
   </li>
+  
+  <table class="table">
+  <thead>
+    <tr>
+      <th>Product #</th>
+      <th>Product Title</th>
+      <th>Order #</th>
+      <th>Quantity</th>
+      <th>Total price</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  
+  <%= for line_item <- @line_items do %>
+    <tr>
+      <td><%= line_item.product_id %></td>
+      <td><%= product_title(line_item.product_id)  %></td>
+      <td><%= line_item.order_id %></td>
+      <td><%= line_item.quantity %></td>
+      <td><%= decimal_to_currency(line_item.total_price) %></td>
+    </tr><br/>
+    <%= end %>
+  </tbody>
+  </table>
 
 </ul>
 

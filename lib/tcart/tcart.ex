@@ -1,23 +1,23 @@
-defmodule Todo.List do
+defmodule Minishop.Tcart do
 
-  defstruct auto_id: 1, entries: HashDict.new
+  defstruct auto_id: 1, items: %{}
 
   #  def new, do: %Todo.List{}
-  def new(entries \\ []) do
-    Enum.reduce(entries, %Todo.List{}, &add_entry(&2, &1))
+  def new(items \\ []) do
+    Enum.reduce(items, %Minishop.Tcart{}, &add_item(&2, &1))
   end
 
-  def size(todo_list) do
-    HashDict.size(todo_list.entries)
+  def size(tcart) do
+    HashDict.size(tcart.items)
   end
 
-  def add_entry(
-    %Todo.List{entries: entries, auto_id: auto_id} = todo_list,
-    entry) do
-      entry = Map.put(entry, :id, auto_id)
-      new_entries = HashDict.put(entries, auto_id, entry)
+  def add_item(
+    %Todo.List{items: items, auto_id: auto_id} = tcart,
+    item) do
+      item = Map.put(item, :id, auto_id)
+      new_items = Map.put(items, auto_id, item)
 
-      %Todo.List{todo_list | entries: new_entries, auto_id: auto_id + 1}
+      %Minishop.Tcart{tcart | items: new_items, auto_id: auto_id + 1}
   end
 
   def entries(%Todo.List{entries: entries}, date) do

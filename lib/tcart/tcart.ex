@@ -1,3 +1,46 @@
+defmodule CartServer do
+  use GenServer
+
+  def start do
+    GenServer.start(CartServer, nil)
+  end
+
+  def add_item(cart_server, new_item) do
+    GenServer.cast(cart_server, {:add_item, new_item})
+  end
+
+  def items(cart_server, date) do
+    GenServer.call(cart_server, {:items, date})
+  end
+
+  def list(cart_server) do
+    GenServer.call(cart_server, {:list})
+  end
+
+  def init(_) do
+    {:ok, Minishop.Tcart.new}
+  end
+
+  def handle_cast({:add_item, new_item}, tcart) do
+    new_state = Minishop.Tcart.add_item(tcart, new_item)
+    {:noreply, new_state}
+  end
+
+  def handle_call({:items, date}, _, tcart) do
+    {
+      :reply,
+      Minishop.Tcart.items(tcart, date),
+      tcart
+    }
+  end
+
+  def handle_call({:list}, _, tcart) do
+    {:reply, Minishop.Tcart.list(tcart),
+      tcart }
+  end
+
+end
+
 defmodule Minishop.Tcart do
 
   defstruct auto_id: 1, items: %{}
@@ -12,7 +55,7 @@ defmodule Minishop.Tcart do
   end
 
   def add_item(
-    %Todo.List{items: items, auto_id: auto_id} = tcart,
+    %Minishop.Tcart{items: items, auto_id: auto_id} = tcart,
     item) do
       item = Map.put(item, :id, auto_id)
       new_items = Map.put(items, auto_id, item)
@@ -20,43 +63,50 @@ defmodule Minishop.Tcart do
       %Minishop.Tcart{tcart | items: new_items, auto_id: auto_id + 1}
   end
 
-  def entries(%Todo.List{entries: entries}, date) do
-    entries
-    |> Stream.filter(fn({_, entry}) ->
-      entry.date == date
+  def items(%Minishop.Tcart{items: items}, date) do
+    items
+    |> Stream.filter(fn({_, item}) ->
+      item.date == date
     end)
-    |> Enum.map(fn({_, entry}) ->
-      entry
+    |> Enum.map(fn({_, item}) ->
+      item
     end)
   end
 
-  def update_entry(todo_list, %{} = new_entry) do
-    update_entry(todo_list, new_entry.id, fn(_) -> new_entry end)
+  def list(%Minishop.Tcart{items: items}) do
+    items
+    |> Enum.map(fn({_, item}) ->
+      item
+    end)
   end
 
-  def update_entry(%Todo.List{entries: entries} = todo_list,
-    entry_id,
+  def update_item(tcart, %{} = new_item) do
+    update_item(tcart, new_item.id, fn(_) -> new_item end)
+  end
+
+  def update_item(%Minishop.Tcart{items: items} = tcart,
+    item_id,
     updater_fun) do
     #      IO.inspect(entries[1])
-      case entries[entry_id] do
-        nil -> todo_list
+      case items[item_id] do
+        nil -> tcart
 
-        old_entry ->
-          new_entry = updater_fun.(old_entry)
-          new_entries = HashDict.put(entries, new_entry.id, new_entry)
-          %Todo.List{todo_list | entries: new_entries}
+        old_item ->
+          new_item = updater_fun.(old_item)
+          new_itemss = Map.put(items, new_item.id, new_item)
+          %Minishop.Tcart{tcart | items: new_itemss}
       end
     end
 
-  def delete_entry(%Todo.List{entries: entries} = todo_list,
-    entry_id) do
+  def delete_item(%Minishop.Tcart{items: items} = tcart,
+    item_id) do
     #      IO.inspect(entries[1])
-      case entries[entry_id] do
-        nil -> todo_list
+      case items[item_id] do
+        nil -> tcart
 
-        old_entry ->
-          new_entries = HashDict.delete(entries, entry_id)
-          %Todo.List{todo_list | entries: new_entries}
+        old_item ->
+          new_items = Map.delete(items, item_id)
+          %Minishop.Tcart{tcart | items: new_items}
       end
     end
 end

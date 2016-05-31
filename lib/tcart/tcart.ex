@@ -13,6 +13,10 @@ defmodule CartServer do
     GenServer.call(cart_server, {:items, date})
   end
 
+  def line_items(cart_server, product_id) do
+    GenServer.call(cart_server, {:line_items, product_id})
+  end
+
   def list(cart_server) do
     GenServer.call(cart_server, {:list})
   end
@@ -39,6 +43,10 @@ defmodule CartServer do
       tcart }
   end
 
+  def handle_call({:line_items, product_id}, _, tcart) do
+    {:reply, Minishop.Tcart.line_items(tcart, product_id),
+      tcart }
+  end
 end
 
 defmodule Minishop.Tcart do
@@ -67,6 +75,16 @@ defmodule Minishop.Tcart do
     items
     |> Stream.filter(fn({_, item}) ->
       item.date == date
+    end)
+    |> Enum.map(fn({_, item}) ->
+      item
+    end)
+  end
+
+  def line_items(%Minishop.Tcart{items: items}, product_id) do
+    items
+    |> Stream.filter(fn({_, item}) ->
+      item.product_id == product_id
     end)
     |> Enum.map(fn({_, item}) ->
       item

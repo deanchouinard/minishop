@@ -17,5 +17,16 @@ defmodule TcartTest do
     IO.inspect CartServer.list(pid)
   end
 
+  test "item server" do
+    {:ok, pid} = CartServer.start
+    CartServer.add_item(pid, %{qty: 1, product_id: 4})
+    CartServer.add_item(pid, %{qty: 2, product_id: 5})
+    CartServer.add_item(pid, %{qty: 1, product_id: 8})
+
+    assert [%{qty: 1, id: 1, product_id: 4}] ==
+      CartServer.line_items(pid, 4)
+
+    IO.inspect CartServer.list(pid)
+  end
 end
 

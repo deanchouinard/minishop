@@ -5,6 +5,7 @@ defmodule Minishop.OrderControllerTest do
   @valid_attrs %{address: "some content", email: "some content", name: "some content", pay_type: "some content"}
   @invalid_attrs %{}
 
+  @tag :skip
   test "lists all entries on index", %{conn: conn} do
     conn = get conn, order_path(conn, :index)
     assert html_response(conn, 200) =~ "Listing orders"
@@ -17,7 +18,7 @@ defmodule Minishop.OrderControllerTest do
 
   test "creates resource and redirects when data is valid", %{conn: conn} do
     conn = post conn, order_path(conn, :create), order: @valid_attrs
-    assert redirected_to(conn) == order_path(conn, :index)
+    assert redirected_to(conn) == order_path(conn, :index )
     assert Repo.get_by(Order, @valid_attrs)
   end
 
@@ -38,12 +39,14 @@ defmodule Minishop.OrderControllerTest do
     end
   end
 
+  @tag :skip
   test "renders form for editing chosen resource", %{conn: conn} do
     order = Repo.insert! %Order{}
     conn = get conn, order_path(conn, :edit, order)
     assert html_response(conn, 200) =~ "Edit order"
   end
 
+  @tag :skip
   test "updates chosen resource and redirects when data is valid", %{conn: conn} do
     order = Repo.insert! %Order{}
     conn = put conn, order_path(conn, :update, order), order: @valid_attrs
@@ -57,6 +60,7 @@ defmodule Minishop.OrderControllerTest do
     assert html_response(conn, 200) =~ "Edit order"
   end
 
+  @tag :skip
   test "deletes chosen resource", %{conn: conn} do
     order = Repo.insert! %Order{}
     conn = delete conn, order_path(conn, :delete, order)

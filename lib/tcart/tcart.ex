@@ -71,7 +71,7 @@ defmodule Minishop.Tcart do
       case items[item_id] do
         nil -> tcart
 
-        old_item ->
+        _old_item ->
           new_items = Map.delete(items, item_id)
           %Minishop.Tcart{tcart | items: new_items}
       end

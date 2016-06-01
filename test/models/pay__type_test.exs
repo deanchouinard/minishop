@@ -3,7 +3,7 @@ defmodule Minishop.Pay_TypeTest do
 
   alias Minishop.Pay_Type
 
-  @valid_attrs %{description: "some content", name: "some content"}
+  @valid_attrs %{description: "some content", code: "some content"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

@@ -1,8 +1,8 @@
-defmodule Minishop.Server do
+defmodule Tcart.Server do
   use GenServer
 
   def start do
-    GenServer.start(Minishop.Server, nil)
+    GenServer.start(Tcart.Server, nil)
   end
 
   def add_item(cart_server, new_item) do
@@ -22,29 +22,29 @@ defmodule Minishop.Server do
   end
 
   def init(_) do
-    {:ok, Minishop.Tcart.new}
+    {:ok, Tcart.Cart.new}
   end
 
   def handle_cast({:add_item, new_item}, tcart) do
-    new_state = Minishop.Tcart.add_item(tcart, new_item)
+    new_state = Tcart.Cart.add_item(tcart, new_item)
     {:noreply, new_state}
   end
 
   def handle_call({:items, date}, _, tcart) do
     {
       :reply,
-      Minishop.Tcart.items(tcart, date),
+      Tcart.Cart.items(tcart, date),
       tcart
     }
   end
 
   def handle_call({:list}, _, tcart) do
-    {:reply, Minishop.Tcart.list(tcart),
+    {:reply, Tcart.Cart.list(tcart),
       tcart }
   end
 
   def handle_call({:line_items, product_id}, _, tcart) do
-    {:reply, Minishop.Tcart.line_items(tcart, product_id),
+    {:reply, Tcart.Cart.line_items(tcart, product_id),
       tcart }
   end
 end

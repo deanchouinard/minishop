@@ -1,6 +1,14 @@
 defmodule Tcart.Cache do
   use GenServer
 
+  def start do
+    GenServer.start(__MODULE__, nil)
+  end
+
+  def server_process(cache_pid, tcart_cart_name) do
+    GenServer.call(cache_pid, {:server_process, tcart_cart_name})
+  end
+
   def init(_) do
     {:ok, Map.new}
   end

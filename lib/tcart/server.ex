@@ -1,8 +1,8 @@
 defmodule Tcart.Server do
   use GenServer
 
-  def start do
-    GenServer.start(Tcart.Server, nil)
+  def start(session_key) do
+    GenServer.start(Tcart.Server, session_key)
   end
 
   def add_item(cart_server, new_item) do
@@ -21,30 +21,31 @@ defmodule Tcart.Server do
     GenServer.call(cart_server, {:list})
   end
 
-  def init(_) do
-    {:ok, Tcart.Cart.new}
+  def init(session_key) do
+    {:ok, {session_key, Tcart.Cart.new}}
   end
 
-  def handle_cast({:add_item, new_item}, tcart) do
+  def handle_cast({:add_item, new_item}, {session_key, tcart}) do
     new_state = Tcart.Cart.add_item(tcart, new_item)
-    {:noreply, new_state}
+    Tcart.Database.store(session_key, new_item)
+    {:noreply, {session_key, new_state}}
   end
 
-  def handle_call({:items, date}, _, tcart) do
+  def handle_call({:items, date}, _, {session_key, tcart}) do
     {
       :reply,
       Tcart.Cart.items(tcart, date),
-      tcart
+      {session_key, tcart}
     }
   end
 
-  def handle_call({:list}, _, tcart) do
+  def handle_call({:list}, _, {session_key, tcart}) do
     {:reply, Tcart.Cart.list(tcart),
-      tcart }
+      {session_key, tcart} }
   end
 
-  def handle_call({:line_items, product_id}, _, tcart) do
+  def handle_call({:line_items, product_id}, _, {session_key, tcart}) do
     {:reply, Tcart.Cart.line_items(tcart, product_id),
-      tcart }
+      {session_key, tcart} }
   end
 end

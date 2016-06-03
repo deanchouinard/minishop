@@ -23,19 +23,20 @@ defmodule Tcart.Database do
 
   def handle_cast({:store, key, data}, db_folder) do
 
-    case Repo.get_by(Session, key: key) do
-      Repo.update
+    case session = Repo.get_by(Session, key: key) do
+      session -> changeset = Session.changeset(session, %{cart_data: data})
+        Repo.update(changeset)
 
-    _ ->
-      Repo.insert!(%Pay_Type{code: "po", description: "Purchase order"})
+      _ ->
+        Repo.insert!(%Session{key: key, cart_data: data})
     end
 
     {:noreply, db_folder}
   end
 
   def handle_call({:get, key}, _, db_folder) do
-    data = "foo"
-    {:reply, data, db_folder}
+    {cart_data} = Repo.get_by(Session, key: key)
+    {:reply, cart_data, db_folder}
   end
 end
 

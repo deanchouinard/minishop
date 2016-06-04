@@ -3,7 +3,7 @@ defmodule Minishop.Session do
 
   schema "sessions" do
     field :key, :string
-    field :cart_data, :string
+    field :cart_data, :binary
 
     timestamps
   end

@@ -22,7 +22,8 @@ defmodule Tcart.Server do
   end
 
   def init(session_key) do
-    {:ok, {session_key, Tcart.Cart.new}}
+    IO.puts session_key
+    {:ok, {session_key, Tcart.Database.get(session_key) || Tcart.Cart.new}}
   end
 
   def handle_cast({:add_item, new_item}, {session_key, tcart}) do

@@ -36,7 +36,11 @@ defmodule Tcart.Database do
   end
 
   def handle_call({:get, key}, _, db_folder) do
-    {cart_data} = Repo.get_by(Session, key: key)
+    cart_data = case Repo.get_by(Session, key: key) do
+      nil -> nil
+      %{cart_data: cart_data} = contents -> :erlang.binary_to_term(cart_data)
+    end
+
     {:reply, cart_data, db_folder}
   end
 end

@@ -20,7 +20,7 @@ defmodule Tcart.Cache do
         {:reply, tcart_server, tcart_servers}
 
       :error ->
-        {:ok, new_server} = Tcart.Server.start
+        {:ok, new_server} = Tcart.Server.start(tcart_name)
 
         {:reply, new_server,
           Map.put(tcart_servers, tcart_name, new_server)

@@ -24,11 +24,12 @@ defmodule Tcart.Database do
   def handle_cast({:store, key, data}, db_folder) do
 
     case session = Repo.get_by(Session, key: key) do
+      nil -> Repo.insert!(%Session{key: key,
+              cart_data: :erlang.term_to_binary(data)})
+
       session -> changeset = Session.changeset(session, %{cart_data: data})
         Repo.update(changeset)
 
-      _ ->
-        Repo.insert!(%Session{key: key, cart_data: data})
     end
 
     {:noreply, db_folder}

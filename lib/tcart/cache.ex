@@ -10,7 +10,8 @@ defmodule Tcart.Cache do
   end
 
   def init(_) do
-    Tcart.Database.start("foo")
+    IO.puts "cache init"
+    Tcart.Database.start()
     {:ok, Map.new}
   end
 

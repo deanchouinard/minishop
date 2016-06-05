@@ -1,29 +1,48 @@
 defmodule Tcart.Database do
   use GenServer
 
-  alias Minishop.Repo
-  alias Minishop.Session
-
-  def start(db_folder) do
-    GenServer.start(__MODULE__, db_folder,
+  def start() do
+    GenServer.start(__MODULE__, nil,
       name: :database_server)
   end
 
   def store(key, data) do
-    GenServer.cast(:database_server, {:store, key, data})
+    key
+    |> choose_worker
+    |> Tcart.DatabaseWorker.store(key, data)
   end
 
   def get(key) do
-   GenServer.call(:database_server, {:get, key})
+    key
+    |> choose_worker
+    |> Tcart.DatabaseWorker.get(key)
   end
 
-  def init(db_folder) do
-    workers = Enum.reduce(0..2, %{}, fn -> Tcart.DatabaseWorker.start end)
-    {:ok, workers}
+  defp choose_worker(key) do
+    GenServer.call(:database_server, {:choose_worker, key})
   end
 
-  defp get_worker() do
-
+  def handle_call({:choose_worker, key}, _, workers) do
+    IO.puts "workers"
+    IO.inspect workers
+    worker_key = :erlang.phash2(key, 3)
+    {:reply, Map.get(workers, worker_key), workers}
   end
+
+  def init(_) do
+    IO.puts "database init"
+    {:ok, start_workers()}
+  end
+
+  defp start_workers() do
+    IO.puts "started sw"
+    tworkers = for index <- 1..3, into: %{} do
+      {:ok, pid} = Tcart.DatabaseWorker.start()
+      {index - 1, pid}
+    end
+    IO.puts "tworkers"
+    IO.inspect tworkers
+  end
+
 end
 

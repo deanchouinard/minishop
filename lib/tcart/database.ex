@@ -18,30 +18,12 @@ defmodule Tcart.Database do
   end
 
   def init(db_folder) do
-    {:ok, db_folder}
+    workers = Enum.reduce(0..2, %{}, fn -> Tcart.DatabaseWorker.start end)
+    {:ok, workers}
   end
 
-  def handle_cast({:store, key, data}, db_folder) do
+  defp get_worker() do
 
-    case session = Repo.get_by(Session, key: key) do
-      nil -> Repo.insert!(%Session{key: key,
-              cart_data: :erlang.term_to_binary(data)})
-
-      session -> changeset = Session.changeset(session, %{cart_data: data})
-        Repo.update(changeset)
-
-    end
-
-    {:noreply, db_folder}
-  end
-
-  def handle_call({:get, key}, _, db_folder) do
-    cart_data = case Repo.get_by(Session, key: key) do
-      nil -> nil
-      %{cart_data: cart_data} = contents -> :erlang.binary_to_term(cart_data)
-    end
-
-    {:reply, cart_data, db_folder}
   end
 end
 

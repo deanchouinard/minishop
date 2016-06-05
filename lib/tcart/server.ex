@@ -28,7 +28,7 @@ defmodule Tcart.Server do
 
   def handle_cast({:add_item, new_item}, {session_key, tcart}) do
     new_state = Tcart.Cart.add_item(tcart, new_item)
-    Tcart.Database.store(session_key, new_item)
+    Tcart.Database.store(session_key, new_state)
     {:noreply, {session_key, new_state}}
   end
 

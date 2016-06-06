@@ -23,25 +23,19 @@ defmodule Tcart.Database do
   end
 
   def handle_call({:choose_worker, key}, _, workers) do
-    IO.puts "workers"
-    IO.inspect workers
     worker_key = :erlang.phash2(key, 3)
     {:reply, Map.get(workers, worker_key), workers}
   end
 
   def init(_) do
-    IO.puts "database init"
     {:ok, start_workers()}
   end
 
   defp start_workers() do
-    IO.puts "started sw"
-    tworkers = for index <- 1..3, into: %{} do
+    for index <- 1..3, into: %{} do
       {:ok, pid} = Tcart.DatabaseWorker.start()
       {index - 1, pid}
     end
-    IO.puts "tworkers"
-    IO.inspect tworkers
   end
 
 end

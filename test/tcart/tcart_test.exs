@@ -30,5 +30,15 @@ defmodule TcartTest do
 
     IO.inspect Tcart.Server.list(ref)
   end
+
+  test "item server database" do
+    {:ok, cache2} = Tcart.Cache.start
+    ref2 = Tcart.Cache.server_process(cache2, "AAAB")
+    
+    #IO.inspect Tcart.Server.list(ref)
+    assert [%{qty: 1, id: 1, product_id: 4}] ==
+      Tcart.Server.line_items(ref2, 4)
+  end
+
 end
 

@@ -24,6 +24,7 @@ defmodule Minishop.Cart do
     conn = assign(conn, :cart, cart)
     #  IO.inspect(conn)
     IO.inspect(cart)
+    IO.inspect(conn)
     conn
   end
 

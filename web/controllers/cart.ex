@@ -5,6 +5,8 @@ defmodule Minishop.Cart do
     defstruct prod_id: nil, qty: nil
   end
   
+  @on_load :reseed_generator
+
   def init(opts) do
     Keyword.fetch!(opts, :repo)
   end
@@ -31,9 +33,20 @@ defmodule Minishop.Cart do
     IO.puts "cookies"
     IO.inspect(conn.cookies["_minishop_key"])
     IO.inspect(conn)
+
+    case cart_key = conn.cookies["cart_key"] do
+      nil -> token = random(10)
+            token = Phoenix.Token.sign
     conn
   end
 
+  def random(number) do
+    :random.uniform(number)
+  end
     
+  def reseed_generator do
+    :random.seed(:erlang.now())
+  end
+
 end
 

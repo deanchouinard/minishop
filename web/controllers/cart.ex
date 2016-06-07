@@ -24,6 +24,12 @@ defmodule Minishop.Cart do
     conn = assign(conn, :cart, cart)
     #  IO.inspect(conn)
     IO.inspect(cart)
+
+    skey = get_session(conn, :cookies)
+    IO.puts "skey"
+    IO.inspect skey
+    IO.puts "cookies"
+    IO.inspect(conn.cookies["_minishop_key"])
     IO.inspect(conn)
     conn
   end

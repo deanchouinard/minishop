@@ -1,11 +1,11 @@
 defmodule Minishop.Cart do
+  @on_load :reseed_generator
   import Plug.Conn
   
   defmodule Item do
     defstruct prod_id: nil, qty: nil
   end
   
-  @on_load :reseed_generator
 
   def init(opts) do
     Keyword.fetch!(opts, :repo)
@@ -36,7 +36,13 @@ defmodule Minishop.Cart do
 
     case cart_key = conn.cookies["cart_key"] do
       nil -> token = random(10)
-            token = Phoenix.Token.sign
+            cart_key = Phoenix.Token.sign(conn, "cart_key", token)
+            conn = Plug.Conn.put_resp_cookie(conn, "cart_key", cart_key)
+      _ -> cart_key
+    end
+    IO.inspect cart_key
+    {:ok, cart_key} = Phoenix.Token.verify(conn, "cart_key", cart_key)
+    conn = assign(conn, :cart_key, cart_key)
     conn
   end
 
@@ -45,7 +51,8 @@ defmodule Minishop.Cart do
   end
     
   def reseed_generator do
-    :random.seed(:erlang.now())
+    :random.seed(:os.timestamp())
+    :ok
   end
 
 end

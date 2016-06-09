@@ -4,8 +4,9 @@ defmodule Tcart.DatabaseWorker do
   alias Minishop.Repo
   alias Minishop.Session
 
-  def start() do
-    GenServer.start(__MODULE__, nil)
+  def start_link() do
+    IO.puts "Starting database worker."
+    GenServer.start_link(__MODULE__, nil)
   end
 
   def store(worker_pid, key, data) do

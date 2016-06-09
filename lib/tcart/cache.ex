@@ -1,16 +1,18 @@
 defmodule Tcart.Cache do
   use GenServer
 
-  def start do
-    GenServer.start(__MODULE__, nil)
+  def start_link do
+    IO.puts "Starting tcart cache."
+
+    GenServer.start_link(__MODULE__, nil, name: :tcart_cache)
   end
 
-  def server_process(cache_pid, tcart_cart_name) do
-    GenServer.call(cache_pid, {:server_process, tcart_cart_name})
+  def server_process(tcart_cart_name) do
+    GenServer.call(:tcart_cache, {:server_process, tcart_cart_name})
   end
 
   def init(_) do
-    Tcart.Database.start()
+    Tcart.Database.start_link()
     {:ok, Map.new}
   end
 
@@ -20,7 +22,7 @@ defmodule Tcart.Cache do
         {:reply, tcart_server, tcart_servers}
 
       :error ->
-        {:ok, new_server} = Tcart.Server.start(tcart_name)
+        {:ok, new_server} = Tcart.Server.start_link(tcart_name)
 
         {:reply, new_server,
           Map.put(tcart_servers, tcart_name, new_server)

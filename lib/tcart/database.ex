@@ -1,8 +1,9 @@
 defmodule Tcart.Database do
   use GenServer
 
-  def start() do
-    GenServer.start(__MODULE__, nil,
+  def start_link() do
+    IO.puts "Starting database server."
+    GenServer.start_link(__MODULE__, nil,
       name: :database_server)
   end
 
@@ -33,7 +34,7 @@ defmodule Tcart.Database do
 
   defp start_workers() do
     for index <- 1..3, into: %{} do
-      {:ok, pid} = Tcart.DatabaseWorker.start()
+      {:ok, pid} = Tcart.DatabaseWorker.start_link()
       {index - 1, pid}
     end
   end

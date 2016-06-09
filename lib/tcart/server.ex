@@ -1,8 +1,10 @@
 defmodule Tcart.Server do
   use GenServer
 
-  def start(session_key) do
-    GenServer.start(Tcart.Server, session_key)
+  def start_link(session_key) do
+    IO.puts "Starting tcart server for #{session_key}."
+
+    GenServer.start_link(Tcart.Server, session_key)
   end
 
   def add_item(cart_server, new_item) do

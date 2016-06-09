@@ -12,7 +12,6 @@ defmodule Tcart.Cache do
   end
 
   def init(_) do
-    Tcart.Database.start_link()
     {:ok, Map.new}
   end
 

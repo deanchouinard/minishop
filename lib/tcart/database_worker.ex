@@ -4,9 +4,10 @@ defmodule Tcart.DatabaseWorker do
   alias Minishop.Repo
   alias Minishop.Session
 
-  def start_link() do
-    IO.puts "Starting database worker."
-    GenServer.start_link(__MODULE__, nil)
+  def start_link(worker_id) do
+    IO.puts "Starting database worker #{worker_id}."
+    GenServer.start_link(__MODULE__, nil,
+            name: via_tuple(worker_id))
   end
 
   def store(worker_pid, key, data) do
@@ -46,5 +47,10 @@ defmodule Tcart.DatabaseWorker do
 
     {:reply, cart_data, nil}
   end
+
+  defp via_tuple(worker_id) do
+    {:via, Tcart.ProcessRegistry, {:database_worker, worker_id}}
+  end
+
 end
 

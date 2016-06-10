@@ -7,7 +7,8 @@ defmodule Tcart.Supervisor do
 
   def init(_) do
     processes = [
-      worker(Tcart.Database, []),
+      worker(Tcart.ProcessRegistry, []),
+      supervisor(Tcart.Database, []),
       worker(Tcart.Cache, [])]
     supervise(processes, strategy: :one_for_one)
   end

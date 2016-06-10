@@ -11,11 +11,11 @@ defmodule Tcart.DatabaseWorker do
   end
 
   def store(worker_pid, key, data) do
-    GenServer.cast(worker_pid, {:store, key, data})
+    GenServer.cast(via_tuple(worker_pid), {:store, key, data})
   end
 
   def get(worker_pid, key) do
-   GenServer.call(worker_pid, {:get, key})
+   GenServer.call(via_tuple(worker_pid), {:get, key})
   end
 
   def init(nil) do

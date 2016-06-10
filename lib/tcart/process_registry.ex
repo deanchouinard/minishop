@@ -39,7 +39,7 @@ defmodule Tcart.ProcessRegistry do
 
   def handle_info({:DOWN, _, :process, pid, _}, process_registry) do
   #    {:noreply, deregister_pid(new_registry, pid)}
-  IO.puts "info"
+  #  IO.puts "info"
     {:noreply, deregister_pid(process_registry, pid)}
   end
 

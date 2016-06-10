@@ -8,25 +8,27 @@ defmodule Tcart.Cache do
   end
 
   def server_process(tcart_cart_name) do
-    GenServer.call(:tcart_cache, {:server_process, tcart_cart_name})
+    case Tcart.Server.whereis(tcart_cart_name) do
+      :undefined ->
+        GenServer.call(:tcart_cache, {:server_process, tcart_cart_name})
+
+      pid -> pid
+    end
   end
 
   def init(_) do
-    {:ok, Map.new}
+    {:ok, nil}
   end
 
-  def handle_call({:server_process, tcart_name}, _, tcart_servers) do
-    case Map.fetch(tcart_servers, tcart_name) do
-      {:ok, tcart_server} ->
-        {:reply, tcart_server, tcart_servers}
+  def handle_call({:server_process, tcart_cart_name}, _, state) do
+    tcart_server_pid = case Tcart.Server.whereis(tcart_cart_name) do
+      :undefined ->
+        {:ok, pid} = Tcart.ServerSupervisor.start_child(tcart_cart_name)
+        pid
 
-      :error ->
-        {:ok, new_server} = Tcart.Server.start_link(tcart_name)
-
-        {:reply, new_server,
-          Map.put(tcart_servers, tcart_name, new_server)
-        }
+      pid -> pid
     end
+    {:reply, tcart_server_pid, state}
   end
 end
 

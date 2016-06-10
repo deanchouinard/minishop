@@ -4,7 +4,8 @@ defmodule Tcart.Server do
   def start_link(session_key) do
     IO.puts "Starting tcart server for #{session_key}."
 
-    GenServer.start_link(Tcart.Server, session_key)
+    GenServer.start_link(Tcart.Server, session_key, name:
+    via_tuple(session_key))
   end
 
   def add_item(cart_server, new_item) do
@@ -21,6 +22,10 @@ defmodule Tcart.Server do
 
   def list(cart_server) do
     GenServer.call(cart_server, {:list})
+  end
+
+  def whereis(session_key) do
+    Tcart.ProcessRegistry.whereis_name({:tcart_server, session_key})
   end
 
   def init(session_key) do
@@ -50,4 +55,9 @@ defmodule Tcart.Server do
     {:reply, Tcart.Cart.line_items(tcart, product_id),
       {session_key, tcart} }
   end
+
+  defp via_tuple(name) do
+    {:via, Tcart.ProcessRegistry, {:tcart_server, name}}
+  end
+
 end

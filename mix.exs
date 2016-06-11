@@ -19,7 +19,7 @@ defmodule Minishop.Mixfile do
   def application do
     [mod: {Minishop, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :gproc]]
+                    :phoenix_ecto, :postgrex, :gproc, :tcart]]
   end
 
   # Specifies which paths to compile per environment.

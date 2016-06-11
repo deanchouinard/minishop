@@ -1,13 +1,12 @@
 defmodule TcartTest do
   use ExUnit.Case, async: false
 
-  test "the truth" do
-    assert 1 + 1 == 2
+  test "empty cart" do
+    assert(0 == Tcart.Cart.size(Tcart.Cart.new))
   end
 
   test "cart_server" do
-    {:ok, cache} = Tcart.Cache.start
-    ref = Tcart.Cache.server_process(cache, "AAA")
+    ref = Tcart.Cache.server_process("AAA")
     Tcart.Server.add_item(ref, %{date: {2015, 1, 1}, title: "Dinner"})
     Tcart.Server.add_item(ref, %{date: {2015, 1, 2}, title: "Dentist"})
     Tcart.Server.add_item(ref, %{date: {2015, 1, 2}, title: "Movie"})
@@ -19,8 +18,7 @@ defmodule TcartTest do
   end
 
   test "item server" do
-    {:ok, cache} = Tcart.Cache.start
-    ref = Tcart.Cache.server_process(cache, "AAAB")
+    ref = Tcart.Cache.server_process("AAAB")
     Tcart.Server.add_item(ref, %{qty: 1, product_id: 4})
     Tcart.Server.add_item(ref, %{qty: 2, product_id: 5})
     Tcart.Server.add_item(ref, %{qty: 1, product_id: 8})
@@ -32,8 +30,7 @@ defmodule TcartTest do
   end
 
   test "item server database" do
-    {:ok, cache2} = Tcart.Cache.start
-    ref2 = Tcart.Cache.server_process(cache2, "AAAB")
+    ref2 = Tcart.Cache.server_process("AAAB")
     
     #IO.inspect Tcart.Server.list(ref)
     assert [%{qty: 1, id: 1, product_id: 4}] ==

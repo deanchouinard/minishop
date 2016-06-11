@@ -19,6 +19,7 @@ defmodule Minishop do
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Minishop.Supervisor]
     Supervisor.start_link(children, opts)
+    #    Tcart.Supervisor.start_link()
   end
 
   # Tell Phoenix to update the endpoint configuration

@@ -49,7 +49,7 @@ defmodule Tcart.DatabaseWorker do
   end
 
   defp via_tuple(worker_id) do
-    {:via, Tcart.ProcessRegistry, {:database_worker, worker_id}}
+    {:via, :gproc, {:n, :l, {:database_worker, worker_id}}}
   end
 
 end

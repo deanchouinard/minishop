@@ -19,7 +19,7 @@ defmodule Minishop.Mixfile do
   def application do
     [mod: {Minishop, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex]]
+                    :phoenix_ecto, :postgrex, :gproc]]
   end
 
   # Specifies which paths to compile per environment.
@@ -37,7 +37,8 @@ defmodule Minishop.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
-     {:monetized, "~> 0.4.0"}]
+     {:monetized, "~> 0.4.0"},
+     {:gproc, "0.3.1"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

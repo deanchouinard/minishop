@@ -25,7 +25,7 @@ defmodule Tcart.Server do
   end
 
   def whereis(session_key) do
-    Tcart.ProcessRegistry.whereis_name({:tcart_server, session_key})
+    :gproc.whereis_name({:n, :l, {:tcart_server, session_key}})
   end
 
   def init(session_key) do
@@ -57,7 +57,7 @@ defmodule Tcart.Server do
   end
 
   defp via_tuple(name) do
-    {:via, Tcart.ProcessRegistry, {:tcart_server, name}}
+    {:via, :gproc, {:n, :l, {:tcart_server, name}}}
   end
 
 end

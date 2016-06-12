@@ -15,7 +15,7 @@ defmodule Tcart.Mixfile do
   end
 
   def application do
-    [applicatons: [],
+    [applicatons: [:logger],
       mod: {Tcart, []}]
   end
 

@@ -14,7 +14,7 @@ defmodule TcartTest do
     assert [%{date: {2015, 1, 1}, id: 1, title: "Dinner"}] ==
       Tcart.Server.items(ref, {2015, 1, 1})
 
-    IO.inspect Tcart.Server.list(ref)
+      #    IO.inspect Tcart.Server.list(ref)
   end
 
   test "item server" do
@@ -26,13 +26,13 @@ defmodule TcartTest do
     assert [%{qty: 1, id: 1, product_id: 4}] ==
       Tcart.Server.line_items(ref, 4)
 
-    IO.inspect Tcart.Server.list(ref)
+      #    IO.inspect Tcart.Server.list(ref)
   end
 
   test "item server database" do
     ref2 = Tcart.Cache.server_process("AAAB")
     
-    #IO.inspect Tcart.Server.list(ref)
+    IO.inspect Tcart.Server.list(ref2)
     assert [%{qty: 1, id: 1, product_id: 4}] ==
       Tcart.Server.line_items(ref2, 4)
   end

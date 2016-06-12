@@ -25,14 +25,14 @@ defmodule Minishop.Cart do
     conn = put_session(conn, :cart, cart)
     conn = assign(conn, :cart, cart)
     #  IO.inspect(conn)
-    IO.inspect(cart)
-
-    skey = get_session(conn, :cookies)
-    IO.puts "skey"
-    IO.inspect skey
-    IO.puts "cookies"
-    IO.inspect(conn.cookies["_minishop_key"])
-    IO.inspect(conn)
+    # IO.inspect(cart)
+    #
+    # skey = get_session(conn, :cookies)
+    # IO.puts "skey"
+    # IO.inspect skey
+    # IO.puts "cookies"
+    # IO.inspect(conn.cookies["_minishop_key"])
+    # IO.inspect(conn)
 
     case cart_key = conn.cookies["cart_key"] do
       nil -> token = random(10)
@@ -40,7 +40,7 @@ defmodule Minishop.Cart do
             conn = Plug.Conn.put_resp_cookie(conn, "cart_key", cart_key)
       _ -> cart_key
     end
-    IO.inspect cart_key
+    #    IO.inspect cart_key
     {:ok, cart_key} = Phoenix.Token.verify(conn, "cart_key", cart_key)
     conn = assign(conn, :cart_key, cart_key)
     conn

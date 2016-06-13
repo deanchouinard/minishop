@@ -1,6 +1,10 @@
 defmodule TcartTest do
-  use Minishop.ConnCase
-  use ExUnit.Case, async: false
+  use Minishop.ConnCase, async: false
+  # use ExUnit.Case, async: false
+
+  setup do
+    :ok
+  end
 
   test "empty cart" do
     assert(0 == Tcart.Cart.size(Tcart.Cart.new))

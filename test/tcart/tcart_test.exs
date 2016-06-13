@@ -1,4 +1,5 @@
 defmodule TcartTest do
+  use Minishop.ConnCase
   use ExUnit.Case, async: false
 
   test "empty cart" do

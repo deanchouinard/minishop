@@ -32,14 +32,31 @@ defmodule TcartTest do
       Tcart.Server.line_items(ref, 4)
 
       #    IO.inspect Tcart.Server.list(ref)
+    :timer.sleep(500)
+
+    item_count = Repo.one from s in Minishop.Session,
+                    select: count(s.id),
+                    where: s.key == "AAAB"
+    
+                    #    IO.inspect item_count
+
+    assert item_count == 1
+
   end
 
   test "item server database" do
     ref2 = Tcart.Cache.server_process("AAAB")
     
-    IO.inspect Tcart.Server.list(ref2)
-    assert [%{qty: 1, id: 1, product_id: 4}] ==
-      Tcart.Server.line_items(ref2, 4)
+    # IO.inspect Tcart.Server.list(ref2)
+    # assert [%{qty: 1, id: 1, product_id: 4}] ==
+    #   Tcart.Server.line_items(ref2, 4)
+
+    :timer.sleep(500)
+    ic = Repo.one from s in Minishop.Session,
+                    select: count(s.id),
+                    where: s.key == "AAAB"
+    
+    assert ic == 0
   end
 
 end

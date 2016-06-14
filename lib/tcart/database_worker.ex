@@ -27,11 +27,13 @@ defmodule Tcart.DatabaseWorker do
     case session = Repo.get_by(Session, key: key) do
       nil -> Repo.insert!(%Session{key: key,
               cart_data: :erlang.term_to_binary(data)})
+            IO.puts "Key #{key} inserted"
 
             # session -> changeset = Session.changeset(session,
       _ -> changeset = Session.changeset(session,
                    %{cart_data: :erlang.term_to_binary(data)})
         Repo.update(changeset)
+        IO.puts "Key #{key} saved"
 
     end
 

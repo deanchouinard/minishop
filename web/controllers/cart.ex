@@ -32,17 +32,25 @@ defmodule Minishop.Cart do
     # IO.inspect skey
     # IO.puts "cookies"
     # IO.inspect(conn.cookies["_minishop_key"])
-    # IO.inspect(conn)
+    IO.inspect(conn)
 
     case cart_key = conn.cookies["cart_key"] do
-      nil -> token = random(10)
+      nil -> token = random(100000)
+            IO.puts "rtoken #{token}"
             cart_key = Phoenix.Token.sign(conn, "cart_key", token)
             conn = Plug.Conn.put_resp_cookie(conn, "cart_key", cart_key)
+            IO.puts "new cart key #{cart_key}"
       _ -> cart_key
     end
-    #    IO.inspect cart_key
+
+    IO.inspect conn
     {:ok, cart_key} = Phoenix.Token.verify(conn, "cart_key", cart_key)
+    IO.inspect cart_key
     conn = assign(conn, :cart_key, cart_key)
+    cart_pid = Tcart.Cache.server_process(cart_key)
+    cart = Tcart.Server.list(cart_pid)
+    conn = assign(conn, :cart_pid, cart_pid)
+    conn = assign(conn, :cart, cart)
     conn
   end
 
@@ -51,7 +59,10 @@ defmodule Minishop.Cart do
   end
     
   def reseed_generator do
-    :random.seed(:os.timestamp())
+    # :random.seed(:os.timestamp())
+    :random.seed(:erlang.phash2([:erlang.node()]),
+                :erlang.monotonic_time(),
+                :erlang.unique_integer())
     :ok
   end
 

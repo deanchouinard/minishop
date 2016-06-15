@@ -55,7 +55,7 @@ defmodule TcartTest do
     ic = Repo.one from s in Minishop.Session,
                     select: count(s.id),
                     where: s.key == "AAAB"
-    
+
     assert ic == 0
   end
 

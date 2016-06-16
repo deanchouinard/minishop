@@ -14,7 +14,7 @@ defmodule Minishop.StoreController do
 
     dcart = for i <- cart, into: %{}, do:
     { "title",  Repo.one (from p in Product,
-        where: p.id == ^i.prod_id,
+        where: p.id == ^i.product_id,
         select: p.title) }
 
       dcart = Enum.reduce(cart, [], &conv_cart/2)
@@ -49,7 +49,7 @@ defmodule Minishop.StoreController do
 
   def conv_cart(item, dcart) do
     qcart = Repo.one (from p in Product,
-        where: p.id == ^item.prod_id,
+        where: p.id == ^item.product_id,
         select: %{prod_id: p.id, title: p.title, price: p.price} )
 
     dcart = List.insert_at(dcart, -1, Map.put_new(qcart, :qty , item.qty) )

@@ -5,7 +5,7 @@
 <table>
   <%= for item <- @cart do %>
     <tr>
-      <td><b><%= item.prod_id %></b></td>
+      <td><b><%= item.product_id %></b></td>
     </tr>
   <% end %>
 </table>

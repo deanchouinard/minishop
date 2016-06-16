@@ -13,7 +13,7 @@ defmodule Minishop.SessionController do
   end
 
   def add_to_cart(conn, %{"id" => prod}) do
-    prod = %{prod_id: prod, qty: 1}
+    prod = %{qty: 1, product_id: String.to_integer(prod)}
     IO.inspect(prod)
     conn = add_prod_to_cart(conn, prod)
     redirect(conn, to: store_path(conn, :index))
@@ -26,18 +26,24 @@ defmodule Minishop.SessionController do
 
   defp add_prod_to_cart(conn, prod) do
 #    prod = %{prod_id: 9, qty: 1}
-    cart = conn.assigns.cart
+    cart_pid = conn.assigns.cart_pid
 
-    case index = Enum.find_index(cart, fn(x) -> x.prod_id == prod.prod_id end) do
-      nil -> cart = List.insert_at(cart, -1, prod)
+    IO.puts "add prod to cart"
+#     IO.inspect cart_key
+    IO.inspect prod
+    Tcart.Server.add_item(cart_pid, prod)
+    cart = Tcart.Server.list(cart_pid)
 
-      _ -> cart = update_cart(cart, prod, index)
-    end
+    # case index = Enum.find_index(cart, fn(x) -> x.prod_id == prod.prod_id end) do
+    #   nil -> cart = List.insert_at(cart, -1, prod)
+    #
+    #   _ -> cart = update_cart(cart, prod, index)
+    # end
 
 #    cart = get_session(conn, :cart) || []
     # conn = assign(conn, :product, prod)
     IO.inspect(cart)
-    conn = put_session(conn, :cart, cart)
+    # conn = put_session(conn, :cart, cart)
     conn = assign(conn, :cart, cart)
   end
 

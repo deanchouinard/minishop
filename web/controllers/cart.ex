@@ -12,18 +12,18 @@ defmodule Minishop.Cart do
   end
 
   def call(conn, repo) do
-    case cart = get_session(conn, :cart) do
-      nil ->
-        cart = []
+    # case cart = get_session(conn, :cart) do
+    #   nil ->
+    #     cart = []
         # cart = [%{prod_id: 12}]
 #        cart = [%Minishop.Cart.Item{}]
-      _ ->
-        cart
-    end
+    # _ ->
+      #        cart
+      #    end
 
     #    cart_id = "100"
-    conn = put_session(conn, :cart, cart)
-    conn = assign(conn, :cart, cart)
+    # conn = put_session(conn, :cart, cart)
+    # conn = assign(conn, :cart, cart)
     #  IO.inspect(conn)
     # IO.inspect(cart)
     #
@@ -32,10 +32,10 @@ defmodule Minishop.Cart do
     # IO.inspect skey
     # IO.puts "cookies"
     # IO.inspect(conn.cookies["_minishop_key"])
-    IO.inspect(conn)
+    #    IO.inspect(conn)
 
     case cart_key = conn.cookies["cart_key"] do
-      nil -> token = random(100000)
+      nil -> token = to_string(random(100000))
             IO.puts "rtoken #{token}"
             cart_key = Phoenix.Token.sign(conn, "cart_key", token)
             conn = Plug.Conn.put_resp_cookie(conn, "cart_key", cart_key)
@@ -43,9 +43,9 @@ defmodule Minishop.Cart do
       _ -> cart_key
     end
 
-    IO.inspect conn
+    #    IO.inspect conn
     {:ok, cart_key} = Phoenix.Token.verify(conn, "cart_key", cart_key)
-    IO.inspect cart_key
+    # IO.inspect cart_key
     conn = assign(conn, :cart_key, cart_key)
     cart_pid = Tcart.Cache.server_process(cart_key)
     cart = Tcart.Server.list(cart_pid)
@@ -54,6 +54,8 @@ defmodule Minishop.Cart do
     conn
   end
 
+  # this random number generator is horrible; need to
+  # come up with a better plan
   def random(number) do
     :random.uniform(number)
   end

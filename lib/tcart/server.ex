@@ -24,6 +24,14 @@ defmodule Tcart.Server do
     GenServer.call(cart_server, {:list})
   end
 
+  def update_item(cart_server, item_id, updater_fun) do
+    GenServer.cast(cart_server, {:update_item, item_id, updater_fun})
+  end
+
+  def delete_item(cart_server, item_id) do
+    GenServer.cast(cart_server, {:delete_item, item_id})
+  end
+
   def whereis(session_key) do
     :gproc.whereis_name({:n, :l, {:tcart_server, session_key}})
   end
@@ -56,6 +64,13 @@ defmodule Tcart.Server do
       {session_key, tcart} }
   end
 
+  def handle_cast({:update_item, item_id, updater_fun}, {session_key, tcart}) do
+    new_state = Tcart.Cart.update_item(tcart, item_id, updater_fun)
+    Tcart.Database.store(session_key, new_state)
+    {:noreply, {session_key, new_state}}
+  end
+
+  def handle_cast
   defp via_tuple(name) do
     {:via, :gproc, {:n, :l, {:tcart_server, name}}}
   end

@@ -42,6 +42,10 @@ defmodule TcartTest do
 
     assert item_count == 1
 
+    IO.puts "show line items result"
+    lir = Tcart.Server.line_items(ref, 4)
+    IO.inspect lir
+
   end
 
   test "item server database" do

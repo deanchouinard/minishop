@@ -31,7 +31,13 @@ defmodule Minishop.SessionController do
     IO.puts "add prod to cart"
 #     IO.inspect cart_key
     IO.inspect prod
-    Tcart.Server.add_item(cart_pid, prod)
+
+    case item = Tcart.Server.line_items(cart_pid, prod.product_id) do
+      nil -> Tcart.Server.add_item(cart_pid, prod)
+
+      _ ->
+    end
+
     cart = Tcart.Server.list(cart_pid)
 
     # case index = Enum.find_index(cart, fn(x) -> x.prod_id == prod.prod_id end) do

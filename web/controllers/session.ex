@@ -35,7 +35,10 @@ defmodule Minishop.SessionController do
     case item = Tcart.Server.line_items(cart_pid, prod.product_id) do
       nil -> Tcart.Server.add_item(cart_pid, prod)
 
-      _ -> true
+      _ -> IO.puts "item:"
+      IO.inspect Enum.at(item, 0).qty
+      up_qty = Enum.at(item, 0).qty + prod.qty
+      Tcart.Server.update_item(cart_pid, Enum.at(item, 0).id, &Map.put(&1, :qty, up_qty))
     end
 
     cart = Tcart.Server.list(cart_pid)

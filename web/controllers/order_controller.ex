@@ -37,10 +37,15 @@ defmodule Minishop.OrderController do
 
         for i <- cart  do
           prod = Repo.one (from p in Product,
-            where: p.id == ^i.prod_id,
+            where: p.id == ^i.product_id,
             select: %{ id: p.id, title: p.title, price: p.price} )
 
-          item_attrs = %{product_id: prod.id, quantity: i.qty, total_price: prod.price}
+          IO.puts "order create"
+          IO.inspect i.qty
+          IO.inspect prod.price
+          item_total = Decimal.mult(Decimal.new(i.qty), prod.price)
+          item_attrs = %{product_id: prod.id, quantity: i.qty,
+              total_price: item_total}
           item = Ecto.build_assoc(order, :line_items, item_attrs)
           item = Repo.insert!(item)
         end

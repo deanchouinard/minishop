@@ -40,12 +40,6 @@ defmodule Tcart.Server do
     {:ok, {session_key, Tcart.Database.get(session_key) || Tcart.Cart.new}}
   end
 
-  def handle_cast({:add_item, new_item}, {session_key, tcart}) do
-    new_state = Tcart.Cart.add_item(tcart, new_item)
-    Tcart.Database.store(session_key, new_state)
-    {:noreply, {session_key, new_state}}
-  end
-
   def handle_call({:items, date}, _, {session_key, tcart}) do
     {
       :reply,
@@ -64,13 +58,24 @@ defmodule Tcart.Server do
       {session_key, tcart} }
   end
 
+  def handle_cast({:add_item, new_item}, {session_key, tcart}) do
+    new_state = Tcart.Cart.add_item(tcart, new_item)
+    Tcart.Database.store(session_key, new_state)
+    {:noreply, {session_key, new_state}}
+  end
+
   def handle_cast({:update_item, item_id, updater_fun}, {session_key, tcart}) do
     new_state = Tcart.Cart.update_item(tcart, item_id, updater_fun)
     Tcart.Database.store(session_key, new_state)
     {:noreply, {session_key, new_state}}
   end
 
-  def handle_cast
+  def handle_cast({:delete_item, item_id}, {session_key, tcart}) do
+    new_state = Tcart.Cart.delete_item(tcart, item_id)
+    Tcart.Database.store(session_key, new_state)
+    {:noreply, {session_key, new_state}}
+  end
+
   defp via_tuple(name) do
     {:via, :gproc, {:n, :l, {:tcart_server, name}}}
   end

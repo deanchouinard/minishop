@@ -35,7 +35,7 @@ defmodule Minishop.SessionController do
     case item = Tcart.Server.line_items(cart_pid, prod.product_id) do
       nil -> Tcart.Server.add_item(cart_pid, prod)
 
-      _ ->
+      _ -> true
     end
 
     cart = Tcart.Server.list(cart_pid)

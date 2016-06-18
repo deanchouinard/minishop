@@ -42,6 +42,15 @@ defmodule TcartTest do
 
     assert item_count == 1
 
+    Tcart.Server.delete_item(ref, 1)
+    assert [] == Tcart.Server.line_items(ref, 4)
+
+    Tcart.Server.update_item(ref, 2, &Map.put(&1, :qty, 4))
+    assert(4 == (Tcart.Server.line_items(ref, 5) |> Enum.at(0)).qty)
+    #Tcart.Server.line_items(ref, 5)
+    IO.inspect Tcart.Server.list(ref)
+    #:timer.sleep(500)
+
     IO.puts "show line items result"
     lir = Tcart.Server.line_items(ref, 4)
     IO.inspect lir

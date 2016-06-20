@@ -21,6 +21,7 @@ defmodule Minishop.SessionController do
 
   def clear(conn, _params) do
     conn = Plug.Conn.configure_session(conn, drop: true)
+    conn = Plug.Conn.put_resp_cookie(conn, "cart_key", "", max_age: 0 )
     redirect(conn, to: page_path(conn, :index))
   end
 
@@ -33,7 +34,7 @@ defmodule Minishop.SessionController do
     IO.inspect prod
 
     case item = Tcart.Server.line_items(cart_pid, prod.product_id) do
-      nil -> Tcart.Server.add_item(cart_pid, prod)
+      [] -> Tcart.Server.add_item(cart_pid, prod)
 
       _ -> IO.puts "item:"
       IO.inspect Enum.at(item, 0).qty

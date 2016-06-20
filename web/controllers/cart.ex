@@ -40,10 +40,16 @@ defmodule Minishop.Cart do
             cart_key = Phoenix.Token.sign(conn, "cart_key", token)
             conn = Plug.Conn.put_resp_cookie(conn, "cart_key", cart_key)
             IO.puts "new cart key #{cart_key}"
+      "" -> token = to_string(random(100000))
+            IO.puts "rtoken #{token}"
+            cart_key = Phoenix.Token.sign(conn, "cart_key", token)
+            conn = Plug.Conn.put_resp_cookie(conn, "cart_key", cart_key)
+            IO.puts "new cart key #{cart_key}"
       _ -> cart_key
     end
 
     #    IO.inspect conn
+    IO.inspect cart_key
     {:ok, cart_key} = Phoenix.Token.verify(conn, "cart_key", cart_key)
     # IO.inspect cart_key
     conn = assign(conn, :cart_key, cart_key)

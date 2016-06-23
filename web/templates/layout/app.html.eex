@@ -16,6 +16,11 @@
       <header class="header">
         <nav role="navigation">
           <ul class="nav nav-pills pull-right">
+            <li><a href="http://localhost:4000/">Home</a><br></li> 
+            <li><a href="http://www....">FAQ</a><br> </li>
+            <li><a href="http://www....">News</a></li>
+            <li><a href="http://www....">Contact</a></li>
+            <li><a href="http://localhost:4000/store">Store</a></li>
             <li><a href="http://www.phoenixframework.org/docs">Get Started</a></li>
           </ul>
         </nav>
@@ -28,6 +33,10 @@
       <main role="main">
         <%= render @view_module, @view_template, assigns %>
       </main>
+
+      <footer class="footer">
+        footer
+      </footer>
 
     </div> <!-- /container -->
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>

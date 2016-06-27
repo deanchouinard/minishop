@@ -1,8 +1,8 @@
-<div class="jumbotron">
+<div class="w3-container w3-center">
   <h2><%= gettext "Welcome to %{name}", name: "Minishop" %></h2>
   <p class="lead">A small shopping cart for ecommerce explorations.</p>
 </div>
-<table>
+<table class=w3-table>
   <%= for item <- @cart do %>
     <tr>
       <td><b><%= item.product_id %></b></td>
@@ -10,12 +10,22 @@
   <% end %>
 </table>
 
-<%= form_for @conn, page_path(@conn, :index), [as: :session], fn f -> %>
-  <div class="form-group">
-    <%= text_input f, :product, placeholder: "Product", class: "form-control" %>
-  </div>
-  <%= submit "Add Product", class: "btn btn-primary" %>
+<div class="w3-card-2 " style="width:50%">
+    <div class="w3-container w3-blue">
+      <h2>Add Product</h2>
+    </div>
+    
+    <%= form_for @conn, page_path(@conn, :index), [class: "w3-container", as: :session], fn f -> %>
+    <p>
+    <label>Product</label>
+    <%= text_input f, :product, class: "w3-input w3-border" %>
+    </p>
+    <p>
+  <%= submit "Add Product", class: "w3-btn w3-blue " %>
 <% end %>
+</div>
 
+  <div class="w3-container">
 <a href="http://localhost:4000/store">Store</a><br> 
 <%= link "Clear Session", to: session_path(@conn, :clear) %>
+  </div>

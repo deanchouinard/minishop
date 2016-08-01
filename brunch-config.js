@@ -65,7 +65,7 @@ exports.config = {
     enabled: true,
     // Whitelist the npm deps to be pulled in as front-end assets.
     // All other deps in package.json will be excluded from the bundle.
-    whitelist: ["phoenix", "phoenix_html"]
-    //styles: {bootstrap: ["dist/css/bootstrap.css"]}
+    whitelist: ["phoenix", "phoenix_html"],
+    styles: {bootstrap: ["dist/css/bootstrap.css"]}
   }
 };

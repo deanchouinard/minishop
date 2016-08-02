@@ -1,8 +1,8 @@
-<div class="w3-container w3-center">
+<div class="well well-sm text-info">
   <h2><%= gettext "Welcome to %{name}", name: "Minishop" %></h2>
   <p class="lead">A small shopping cart for ecommerce explorations.</p>
 </div>
-<table class=w3-table>
+<table class="table">
   <%= for item <- @cart do %>
     <tr>
       <td><b><%= item.product_id %></b></td>
@@ -10,22 +10,18 @@
   <% end %>
 </table>
 
-<div class="w3-card-2 " style="width:50%">
-    <div class="w3-container w3-blue">
-      <h2>Add Product</h2>
-    </div>
-    
-    <%= form_for @conn, page_path(@conn, :index), [class: "w3-container", as: :session], fn f -> %>
-    <p>
-    <label>Product</label>
-    <%= text_input f, :product, class: "w3-input w3-border" %>
-    </p>
-    <p>
-  <%= submit "Add Product", class: "w3-btn w3-blue " %>
-<% end %>
-</div>
+<h2>Add Product</h2>
 
-  <div class="w3-container">
+    <%= form_for @conn, page_path(@conn, :index), [role: "form", as: :session], fn f -> %>
+
+    <div class="form-group">
+    <label for="product">Product:</label>
+    <%= text_input f, :product, [class: "form-control", id: "product"] %>
+    </div>
+    <%= submit "Add Product", class: "btn btn-default" %>
+    <% end %>
+
+  <div class="container">
 <a href="http://localhost:4000/store">Store</a><br> 
 <%= link "Clear Session", to: session_path(@conn, :clear) %>
   </div>

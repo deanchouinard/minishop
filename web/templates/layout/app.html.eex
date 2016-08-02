@@ -36,8 +36,8 @@
         <%= render @view_module, @view_template, assigns %>
       </main>
 
-      <footer class="w3-container w3-grey">
-        <ul class=w3-navbar>
+      <footer class="container">
+        <ul class="nav navbar-nav">
           <li><a href="http://www...">About</a></li>
         </ul>
       </footer>

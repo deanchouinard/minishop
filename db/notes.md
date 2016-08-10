@@ -19,12 +19,12 @@ One record with multiple fields with logic in program:
 SKU | 2 | 5 | 10 | 25 | 50 | 100
 or, multiple records
 SKU | range | price
-If not is a range, use the base price (record with no range)
+If not in a range, use the base price (record with no range)
 
 Effective Dates
 Never delete pricing (because tied to orders or line items)
 Use effective date method:
-Select the price record with the latest effective date
-Previous effective dates are not active
+Select the price record with the latest valid effective date
+Previous superseded effective dates are not active
 
 

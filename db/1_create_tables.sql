@@ -133,6 +133,13 @@ ALTER TABLE public.pay_types_id_seq OWNER TO postgres;
 
 ALTER SEQUENCE pay_types_id_seq OWNED BY pay_types.id;
 
+-----
+create table categories (
+  id integer not null,
+  name character varying(80),
+  inserted_at timestamp without time zone NOT NULL,
+  updated_at timestamp without time zone NOT NULL
+);
 
 --
 -- Name: products; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 

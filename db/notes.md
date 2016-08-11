@@ -27,4 +27,15 @@ Use effective date method:
 Select the price record with the latest valid effective date
 Previous superseded effective dates are not active
 
+Product Options
+product_options
+-rank (to control listing order)
+name
+fk to product
+
+product_option_values
+-rank
+name
+fk to product_options
+
 

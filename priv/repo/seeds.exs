@@ -13,17 +13,31 @@
 alias Minishop.Repo
 alias Minishop.Product
 alias Minishop.Pay_Type
+alias Minishop.Category
 
 import Ecto.Query
 
-product_params = %{title: "First Product", description: "The first product",
-  image_url: "https://localhost/first_product.jpg", price: 10.50}
+# Categories
+
+category_params = %{name: "Bats"}
+changeset = Category.changeset(%Category{}, category_params)
+Repo.get_by(Category, name: "Bats") ||
+  Repo.insert!(changeset)
+
+category_id = Repo.one(from c in Category, select: c.id, limit: 1)
+
+# Products
+
+product_params = %{sku: "SKU0001", title: "First Product", description: "The first product",
+  image_url: "https://localhost/first_product.jpg", price: 10.50,
+  category_id: category_id}
 changeset = Product.changeset(%Product{}, product_params)
 Repo.get_by(Product, title: "First Product") ||
   Repo.insert!(changeset)
 
-product_params = %{title: "Second Product", description: "The second product",
-  image_url: "https://localhost/first_product.jpg", price: 123.45}
+product_params = %{sku: "SKU0002", title: "Second Product", description: "The second product",
+  image_url: "https://localhost/first_product.jpg", price: 123.45,
+  category_id: category_id}
 changeset = Product.changeset(%Product{}, product_params)
 Repo.get_by(Product, title: "Second Product") ||
   Repo.insert!(changeset)

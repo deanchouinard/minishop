@@ -1,19 +1,14 @@
-defmodule Minishop.Product do
+defmodule Minishop.Category do
   use Minishop.Web, :model
 
-  schema "products" do
-    field :sku, :string
-    field :title, :string
-    field :description, :string
-    field :image_url, :string
-    field :price, :decimal
-    field :category_id, :integer
-
+  schema "categories" do
+    field :name, :string
+    
     timestamps
   end
 
-  @required_fields ~w(sku title)
-  @optional_fields ~w(description image_url price category_id)
+  @required_fields ~w(name)
+  @optional_fields ~w()
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -26,3 +21,4 @@ defmodule Minishop.Product do
     |> cast(params, @required_fields, @optional_fields)
   end
 end
+

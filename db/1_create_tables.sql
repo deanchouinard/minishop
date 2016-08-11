@@ -141,16 +141,33 @@ create table categories (
   updated_at timestamp without time zone NOT NULL
 );
 
+create sequence categories_id_seq
+  start with 1
+  increment by 1
+  no minvalue
+  no maxvalue
+  cache 1;
+
+ALTER TABLE ONLY categories ALTER COLUMN id
+  SET DEFAULT nextval('categories_id_seq'::regclass);
+
+ALTER TABLE ONLY categories
+  ADD CONSTRAINT categories_pkey PRIMARY KEY (id);
+
+ALTER SEQUENCE categories_id_seq OWNED BY categories.id;
+
 --
 -- Name: products; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE products (
     id integer NOT NULL,
+    sku character varying(20),
     title character varying(255),
     description text,
+    category_id integer,
     image_url character varying(255),
-    price numeric(8,2) DEFAULT 0,
+    price numeric(15,2) DEFAULT 0,
     inserted_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -179,6 +196,9 @@ ALTER TABLE public.products_id_seq OWNER TO postgres;
 ALTER SEQUENCE products_id_seq OWNED BY products.id;
 
 
+ALTER TABLE ONLY products
+    ADD CONSTRAINT products_category_id_fkey FOREIGN KEY (category_id)
+    REFERENCES categories(id);
 --
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -343,7 +363,8 @@ CREATE UNIQUE INDEX sessions_key_index ON sessions USING btree (key);
 --
 
 ALTER TABLE ONLY line_items
-    ADD CONSTRAINT line_items_order_id_fkey FOREIGN KEY (order_id) REFERENCES orders(id);
+    ADD CONSTRAINT line_items_order_id_fkey FOREIGN KEY (order_id)
+    REFERENCES orders(id);
 
 
 --

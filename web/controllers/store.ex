@@ -47,13 +47,6 @@ defmodule Minishop.StoreController do
     # |> redirect(to: store_path(conn, :index))
   end
 
-  def conv_cart(item, dcart) do
-    qcart = Repo.one (from p in Product,
-        where: p.id == ^item.product_id,
-        select: %{prod_id: p.id, title: p.title, price: p.price} )
-
-    dcart = List.insert_at(dcart, -1, Map.put_new(qcart, :qty , item.qty) )
-  end
 
 end
 

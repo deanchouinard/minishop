@@ -36,6 +36,8 @@ defmodule Minishop.Web do
 
       import Minishop.Router.Helpers
       import Minishop.Gettext
+      import Minishop.Controllers.Helpers
+
     end
   end
 

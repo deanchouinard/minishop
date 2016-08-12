@@ -2,28 +2,22 @@
   <h2><%= gettext "Welcome to %{name}", name: "Minishop" %></h2>
   <p class="lead">A small shopping cart for ecommerce explorations.</p>
 </div>
-<table class="table">
-  <%= for item <- @cart do %>
-    <tr>
-      <td><b><%= item.product_id %></b></td>
-    </tr>
-  <% end %>
-</table>
 
 <table class="table">
   <thead>
     <tr>
+      <th>SKU</th>
       <th>Title</th>
       <th>Description</th>
       <!--      <th>Image url</th> -->
       <th>Price</th>
 
-      <th></th>
     </tr>
   </thead>
   <tbody>
 <%= for product <- @products do %>
     <tr>
+      <td><%= product.sku %></td>
       <td><%= product.title %></td>
       <td><%= product.description %></td>
       <!--      <td><%= product.image_url %></td> -->
@@ -32,12 +26,27 @@
       <td class="text-right">
         <%= link "Add to Cart", to: session_path(@conn, :add_to_cart,
         product.id), class: "btn btn-default btn-xs" %>
-        <%= link "Edit", to: product_path(@conn, :edit, product), class: "btn btn-default btn-xs" %>
-        <%= link "Delete", to: product_path(@conn, :delete, product), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
       </td>
     </tr>
 <% end %>
   </tbody>
+</table>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>SKU</th>
+      <th>Title</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <%= for item <- @cart do %>
+    <tr>
+      <td><b><%= item.sku %></b></td>
+      <td> <%= item.title %></td>
+      <td> <%= decimal_to_currency(item.price) %>
+    </tr>
+  <% end %>
 </table>
 <h2>Add Product</h2>
 

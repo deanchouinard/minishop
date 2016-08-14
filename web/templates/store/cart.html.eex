@@ -1,9 +1,10 @@
-<h3>Cart</h3>
-<table>
+<div class="panel panel-default">
+  <h3>Cart</h3>
+<table class="table">
   <thead>
     <tr>
-      <th> Prod ID </th>
       <th> Qty </th>
+      <th> SKU </th>
       <th> Title </th>
       <th> Price </th>
     </tr>
@@ -11,8 +12,8 @@
   <tbody>
   <%= for item <- @dcart do %>
     <tr>
-      <td><b><%= item.prod_id %></b></td>
       <td><b><%= item.qty %></b></td>
+      <td><b><%= item.sku %></b></td>
       <td><b><%= item.title %></b></td>
       <td><b><%= decimal_to_currency(item.price) %></b></td>
     </tr>
@@ -23,3 +24,4 @@
   <%= decimal_to_currency(cart_total(@dcart)) %>
 <%= link "Clear Session", to: session_path(@conn, :clear), class: "btn btn-default btn-xs"  %>
 <%= link "Checkout", to: order_path(@conn, :new), class: "btn btn-default btn-xs"  %>
+</div>

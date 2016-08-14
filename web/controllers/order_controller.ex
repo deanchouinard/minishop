@@ -19,7 +19,7 @@ defmodule Minishop.OrderController do
 
   def new(conn, _params) do
     cart = conn.assigns.cart
-    dcart = Enum.reduce(cart, [], &Minishop.StoreController.conv_cart/2)
+    dcart = build_display_cart(cart)
 
     changeset = Order.changeset(%Order{})
     render(conn, "new.html", changeset: changeset)
@@ -50,6 +50,8 @@ defmodule Minishop.OrderController do
           item = Repo.insert!(item)
         end
 
+        conn = clear_cart(conn)
+        #conn = assign(conn, :cart, cart)
         conn
         |> put_flash(:info, "Order created successfully.")
         |> redirect(to: order_path(conn, :show, order.id))
@@ -105,6 +107,13 @@ defmodule Minishop.OrderController do
       |> Pay_Type.code_and_ids
     pay_types = Repo.all query
     assign(conn, :pay_types, pay_types)
+  end
+
+  def clear_cart(conn) do
+    cart_pid = conn.assigns.cart_pid
+    cart = Tcart.Server.list(cart_pid)
+    Enum.each(cart, fn(c) -> Tcart.Server.delete_item(cart_pid, c.id) end)
+    conn = assign(conn, :cart, cart)
   end
 
 end

@@ -4,10 +4,13 @@ defmodule Minishop.Controllers.Helpers do
   alias Minishop.Product
   alias Minishop.Repo
 
-  def conv_cart(item, dcart) do
+  def build_display_cart(cart), do: Enum.reduce(cart, [], &conv_cart/2)
+  
+  defp conv_cart(item, dcart) do
     qcart = Repo.one (from p in Product,
         where: p.id == ^item.product_id,
-        select: %{prod_id: p.id, sku: p.sku, title: p.title, price: p.price} )
+        select: %{prod_id: p.id, sku: p.sku, 
+          title: p.title, price: p.price} )
 
     dcart = List.insert_at(dcart, -1, Map.put_new(qcart, :qty , item.qty) )
   end

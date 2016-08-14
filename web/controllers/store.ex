@@ -17,7 +17,7 @@ defmodule Minishop.StoreController do
         where: p.id == ^i.product_id,
         select: p.title) }
 
-      dcart = Enum.reduce(cart, [], &conv_cart/2)
+      dcart = build_display_cart(cart)
       conn = assign(conn, :dcart, dcart)
 
     IO.puts("***dcart***")
@@ -33,7 +33,7 @@ defmodule Minishop.StoreController do
     IO.inspect(conn.assigns)
 
     cart = conn.assigns.cart
-    dcart = Enum.reduce(cart, [], &conv_cart/2)
+    dcart = build_display_cart(cart)
 
     changeset = Order.changeset(%Order{})
     render conn, Minishop.OrderView, "new.html", changeset: changeset,

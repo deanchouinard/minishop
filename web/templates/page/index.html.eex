@@ -3,6 +3,7 @@
   <p class="lead">A small shopping cart for ecommerce explorations.</p>
 </div>
 
+<h3>Catalog</h3>
 <table class="table">
   <thead>
     <tr>
@@ -32,22 +33,9 @@
   </tbody>
 </table>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>SKU</th>
-      <th>Title</th>
-      <th>Price</th>
-    </tr>
-  </thead>
-  <%= for item <- @cart do %>
-    <tr>
-      <td><b><%= item.sku %></b></td>
-      <td> <%= item.title %></td>
-      <td> <%= decimal_to_currency(item.price) %>
-    </tr>
-  <% end %>
-</table>
+<%= render Minishop.StoreView, "cart.html", %{dcart: @dcart, conn: @conn} %>
+<!-- <%= # render "cart.html", assigns %> -->
+
 <h2>Add Product</h2>
 
     <%= form_for @conn, page_path(@conn, :index), [role: "form", as: :session], fn f -> %>

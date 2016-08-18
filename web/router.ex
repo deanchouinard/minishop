@@ -18,6 +18,7 @@ defmodule Minishop.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/category_search/:id", PageController, :category_search
     post "/", SessionController, :add
     get "/session/clear", SessionController, :clear
     #    get "/session/add_cart/:title", SessionController, :add_to_cart

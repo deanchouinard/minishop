@@ -3,19 +3,27 @@
   <p class="lead">A small shopping cart for ecommerce explorations.</p>
 </div>
 
-<h3>Catalog</h3>
-<table class="table">
-  <thead>
-    <tr>
-      <th>SKU</th>
-      <th>Title</th>
-      <th>Description</th>
-      <!--      <th>Image url</th> -->
-      <th>Price</th>
+<div class="container">
+  <div class="row">
+    <div class="col-md-2">
+      <h3>Categories</h3>
+      <%= render Minishop.SharedView, "category_list.html", [conn: @conn,
+        categories: @categories] %>
+    </div>
+    <div class="col-md-7">
+      <h3>Catalog</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>SKU</th>
+            <th>Title</th>
+            <th>Description</th>
+            <!--      <th>Image url</th> -->
+            <th>Price</th>
 
-    </tr>
-  </thead>
-  <tbody>
+          </tr>
+        </thead>
+        <tbody>
 <%= for product <- @products do %>
     <tr>
       <td><%= product.sku %></td>
@@ -30,11 +38,15 @@
       </td>
     </tr>
 <% end %>
-  </tbody>
-</table>
-
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-3">
 <%= render Minishop.StoreView, "cart.html", %{dcart: @dcart, conn: @conn} %>
 <!-- <%= # render "cart.html", assigns %> -->
+    </div>
+  </div
+</div>
 
 <h2>Add Product</h2>
 

@@ -18,40 +18,45 @@ alias Minishop.Category
 import Ecto.Query
 
 # Categories
+categories = ["Shirts", "Pants", "Bats"]
 
-category_params = %{name: "Bats"}
-changeset = Category.changeset(%Category{}, category_params)
-Repo.get_by(Category, name: "Bats") ||
-  Repo.insert!(changeset)
+for cat <- categories do
+  category_params = %{name: cat}
+  changeset = Category.changeset(%Category{}, category_params)
+  Repo.get_by(Category, name: cat) ||
+    Repo.insert!(changeset)
+end
 
-category_id = Repo.one(from c in Category, select: c.id, limit: 1)
+category_id = Repo.one(from c in Category, select: c.id, 
+     where: c.name == "Bats", limit: 1)
 
 # Products
 
-product_params = %{sku: "SKU0001", title: "First Product", description: "The first product",
-  image_url: "https://localhost/first_product.jpg", price: 10.50,
-  category_id: category_id}
-changeset = Product.changeset(%Product{}, product_params)
-Repo.get_by(Product, title: "First Product") ||
-  Repo.insert!(changeset)
+products = [{"SKU0001", "First Product", "The first product",
+  "https://localhost/first_product.jpg", 10.50},
+  {"SKU0002", "Second Product", "The second product",
+  "https://localhost/first_product.jpg", 123.45}, 
+  {"SKU0003", "Third Product", "The third product",
+  "https://localhost/first_product.jpg", 11.99}]
 
-product_params = %{sku: "SKU0002", title: "Second Product", description: "The second product",
-  image_url: "https://localhost/first_product.jpg", price: 123.45,
-  category_id: category_id}
-changeset = Product.changeset(%Product{}, product_params)
-Repo.get_by(Product, title: "Second Product") ||
-  Repo.insert!(changeset)
+for {sku, title, description, image_url, price} <- products do
+  product_params = %{sku: sku, title: title, description: description,
+    image_url: image_url, price: price, category_id: category_id}
+
+  changeset = Product.changeset(%Product{}, product_params)
+  Repo.get_by(Product, title: title) ||
+    Repo.insert!(changeset)
+
+end
 
 # pay_types
+pay_types = [{"cc", "Credit Card"}, {"check", "Check"},
+  {"po", "Purchase Order"}, {"cash", "Cash"}]
 
-Repo.get_by(Pay_Type, code: "cc") ||
-  Repo.insert!(%Pay_Type{code: "cc", description: "Credit card"})
-
-Repo.get_by(Pay_Type, code: "check") ||
-  Repo.insert!(%Pay_Type{code: "check", description: "Check"})
-
-Repo.get_by(Pay_Type, code: "po") ||
-  Repo.insert!(%Pay_Type{code: "po", description: "Purchase order"})
+for {pt, desc} <- pay_types do
+  Repo.get_by(Pay_Type, code: pt) ||
+    Repo.insert!(%Pay_Type{code: pt, description: desc})
+end
 
 
 # alias Todo.Repo

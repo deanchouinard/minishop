@@ -16,7 +16,7 @@ defmodule Minishop.SessionController do
     prod = %{qty: 1, product_id: String.to_integer(prod)}
     IO.inspect(prod)
     conn = add_prod_to_cart(conn, prod)
-    redirect(conn, to: store_path(conn, :index))
+    redirect(conn, to: page_path(conn, :index))
   end
 
   def clear(conn, _params) do

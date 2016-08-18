@@ -2,9 +2,9 @@ defmodule Minishop.Cart do
 #  @on_load :reseed_generator
   import Plug.Conn
   
-  defmodule Item do
-    defstruct prod_id: nil, qty: nil
-  end
+  # defmodule Item do
+  #   defstruct prod_id: nil, qty: nil
+  # end
   
 
   def init(opts) do

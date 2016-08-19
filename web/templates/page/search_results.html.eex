@@ -1,0 +1,20 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-2">
+      <h3>Categories</h3>
+      <%= # render Minishop.SharedView, "category_list.html", [conn: @conn,
+        #categories: @categories] %>
+    </div>
+    <div class="col-md-7">
+      <h3>Catalog</h3>
+      <%= render Minishop.SharedView, "product_list.html", %{conn: @conn,
+                                    products: @sresults} %>
+    </div>
+    <div class="col-md-3">
+<%=# render Minishop.StoreView, "cart.html", %{dcart: @dcart, conn: @conn} %>
+<!-- <%= # render "cart.html", assigns %> -->
+    </div>
+  </div
+</div>
+

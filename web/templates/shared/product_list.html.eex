@@ -1,0 +1,30 @@
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>SKU</th>
+            <th>Title</th>
+            <th>Description</th>
+            <!--      <th>Image url</th> -->
+            <th>Price</th>
+
+          </tr>
+        </thead>
+        <tbody>
+<%= for product <- @products do %>
+    <tr>
+      <td><%= link product.sku <> "  " <>  product.title, to: page_path(@conn, :display_product,
+                          product.id) %></td>
+      <td><%=# product.title %></td>
+      <td><%= product.description %></td>
+      <!--      <td><%= product.image_url %></td> -->
+      <td><%= decimal_to_currency(product.price) %></td>
+
+      <td class="text-right">
+        <%= link "Add to Cart", to: session_path(@conn, :add_to_cart,
+        product.id), class: "btn btn-default btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+        </tbody>
+      </table>

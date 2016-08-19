@@ -1,7 +1,7 @@
 defmodule Minishop.OrderView do
   use Minishop.Web, :view
 
-  import Minishop.StoreView, only: [decimal_to_currency: 1]
+#  import Minishop.StoreView, only: [decimal_to_currency: 1]
 
   import Ecto.Query
   alias Minishop.Repo

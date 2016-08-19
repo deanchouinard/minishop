@@ -1,4 +1,4 @@
 <%= for category <- @categories do %>
-  <%= link category.name, to: page_path(@conn, :category_search, category.name) %>
+  <%= link category.name, to: page_path(@conn, :category_search, category.id) %>
   </br>
 <%= end %>

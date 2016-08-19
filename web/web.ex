@@ -54,6 +54,7 @@ defmodule Minishop.Web do
       import Minishop.Router.Helpers
       import Minishop.ErrorHelpers
       import Minishop.Gettext
+      import Minishop.Views.Helpers
     end
   end
 

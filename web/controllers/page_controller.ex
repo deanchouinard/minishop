@@ -4,6 +4,8 @@ defmodule Minishop.PageController do
   alias Minishop.Product
   alias Minishop.Category
   
+  import Ecto.Query
+
   def index(conn, _params) do
     products = Repo.all(Product)
     categories = Repo.all(Category)
@@ -15,4 +17,17 @@ defmodule Minishop.PageController do
     render conn, "index.html", [ dcart: dcart, products: products,
                                 categories: categories ]
   end
+
+  def category_search(conn, %{"id" => category}) do
+    sresults = Repo.all from p in Product, where: p.category_id == ^category
+
+    render conn, "search_results.html", sresults: sresults
+  end
+
+  def display_product(conn, %{"id" => prod_id}) do
+    product = Repo.one from p in Product, where: p.id == ^prod_id
+
+    render conn, "product_display.html", product: product
+  end
+
 end

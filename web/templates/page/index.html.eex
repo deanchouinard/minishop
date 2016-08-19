@@ -12,34 +12,8 @@
     </div>
     <div class="col-md-7">
       <h3>Catalog</h3>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>SKU</th>
-            <th>Title</th>
-            <th>Description</th>
-            <!--      <th>Image url</th> -->
-            <th>Price</th>
-
-          </tr>
-        </thead>
-        <tbody>
-<%= for product <- @products do %>
-    <tr>
-      <td><%= product.sku %></td>
-      <td><%= product.title %></td>
-      <td><%= product.description %></td>
-      <!--      <td><%= product.image_url %></td> -->
-      <td><%= decimal_to_currency(product.price) %></td>
-
-      <td class="text-right">
-        <%= link "Add to Cart", to: session_path(@conn, :add_to_cart,
-        product.id), class: "btn btn-default btn-xs" %>
-      </td>
-    </tr>
-<% end %>
-        </tbody>
-      </table>
+      <%= render Minishop.SharedView, "product_list.html", %{conn: @conn,
+                                    products: @products} %>
     </div>
     <div class="col-md-3">
 <%= render Minishop.StoreView, "cart.html", %{dcart: @dcart, conn: @conn} %>

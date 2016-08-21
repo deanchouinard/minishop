@@ -19,12 +19,11 @@
               <a class="navbar-brand" href="#">Minishop</a>  
             </div>
             <ul class="nav navbar-nav">
-              <li class="active"><a href="http://localhost:4000/">Home</a></li> 
-              <li><a href="http://www....">FAQ</a></li>
-              <li><a href="http://www....">News</a></li>
-              <li><a href="http://www....">Contact</a></li>
+              <li><%= link "Home", to: page_path(@conn, :index) %></li>
+              <li><a href="http://www....">Log In</a></li>
+              <li><%= link "Your Cart", to: page_path(@conn, :your_cart) %></li>
+              <li><a href="http://www....">Checkout</a></li>
               <li><a href="http://localhost:4000/store">Store</a></li>
-              <li><a href="http://www.phoenixframework.org/docs">Get Started</a></li>
             </ul>
           </div>
         </nav>

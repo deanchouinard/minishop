@@ -30,4 +30,12 @@ defmodule Minishop.PageController do
     render conn, "product_display.html", product: product
   end
 
+  def your_cart(conn, _params) do
+    cart = conn.assigns.cart
+    dcart = build_display_cart(cart)
+
+    render conn, "your_cart.html", dcart: dcart
+  end
+
+
 end

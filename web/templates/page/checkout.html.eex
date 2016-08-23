@@ -1,4 +1,9 @@
-<h2>New order</h2>
+<div class="container">
+  <div class="row">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8">
+<h2>Checkout</h2>
 
 <%= render Minishop.StoreView, "cart.html", %{dcart: @dcart, conn: @conn} %>
 <%= form_for @changeset, order_path(@conn, :create), fn f -> %>
@@ -34,9 +39,14 @@
   </div>
 
   <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
+    <%= submit "Buy", class: "btn btn-primary" %>
   </div>
 <% end %>
 
 
 <%= link "Back", to: store_path(@conn, :index) %>
+    </div>
+    <div class="col-md-2">
+    </div>
+  </div>
+</div>

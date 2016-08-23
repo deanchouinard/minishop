@@ -1,26 +1,37 @@
-<div class="small">
-  <h3>Your Cart</h3>
-<table class="table">
-  <thead>
-    <tr>
-      <th> Qty </th>
-      <th> SKU </th>
-      <th> Title </th>
-      <th> Price </th>
-    </tr>
-  </thead>
-  <tbody>
-  <%= for item <- @dcart do %>
-    <tr>
-      <td><b><%= item.qty %></b></td>
-      <td><b><%= item.sku %></b></td>
-      <td><b><%= item.title %></b></td>
-      <td><b><%= decimal_to_currency(item.price) %></b></td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
-<p><b>Total:  <%= decimal_to_currency(cart_total(@dcart)) %></b></p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8">
+      <div class="small">
+        <h3>Your Cart</h3>
+        <table class="table">
+        <thead>
+          <tr>
+            <th> Qty </th>
+            <th> SKU </th>
+          <th> Title </th>
+            <th> Price </th>
+          </tr>
+        </thead>
+        <tbody>
+        <%= for item <- @dcart do %>
+          <tr>
+            <td><b><%= item.qty %></b></td>
+            <td><b><%= item.sku %></b></td>
+            <td><b><%= item.title %></b></td>
+            <td><b><%= decimal_to_currency(item.price) %></b></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <p><b>Total:  <%= decimal_to_currency(cart_total(@dcart)) %></b></p>
 
-<%= link "Checkout", to: page_path(@conn, :checkout), class: "btn btn-primary btn-md"  %>
+      <%= link "Checkout", to: page_path(@conn, :checkout), class: "btn btn-primary btn-md"  %>
+    </div>
+    </div>
+    <div class="col-md-2">
+    </div>
+  </div>
 </div>
+

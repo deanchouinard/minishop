@@ -3,6 +3,16 @@ defmodule Minishop.Views.Helpers do
   alias Monetized.Money
   alias Decimal, as: D
 
+  alias Minishop.Pay_Type
+  alias Minishop.Repo
+  import Ecto.Query
+
+  def display_pay_type(id) do
+    Repo.one from p in Pay_Type,
+      where: p.id == ^id,
+      select: p.description
+  end
+
   def decimal_to_currency(val) do
 #    IO.puts "dtc"
 #    IO.inspect val

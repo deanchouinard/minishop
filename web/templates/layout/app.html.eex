@@ -22,7 +22,7 @@
               <li><%= link "Home", to: page_path(@conn, :index) %></li>
               <li><a href="http://www....">Log In</a></li>
               <li><%= link "Your Cart", to: page_path(@conn, :your_cart) %></li>
-              <li><a href="http://www....">Checkout</a></li>
+              <li><%= link "Checkout", to: page_path(@conn, :checkout) %> </li>
               <li><a href="http://localhost:4000/store">Store</a></li>
             </ul>
           </div>

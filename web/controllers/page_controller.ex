@@ -3,9 +3,12 @@ defmodule Minishop.PageController do
 
   alias Minishop.Product
   alias Minishop.Category
+  alias Minishop.Order
   
   import Ecto.Query
 
+  plug :load_pay_types when action in [:checkout]
+  
   def index(conn, _params) do
     products = Repo.all(Product)
     categories = Repo.all(Category)
@@ -36,6 +39,16 @@ defmodule Minishop.PageController do
 
     render conn, "your_cart.html", dcart: dcart
   end
+
+  def checkout(conn, _params) do
+    cart = conn.assigns.cart
+    dcart = build_display_cart(cart)
+
+    changeset = Order.changeset(%Order{})
+    render(conn, "checkout.html", %{dcart: dcart, changeset: changeset})
+    #    action: order_path(conn, :create) )
+  end
+
 
 
 end

@@ -2,7 +2,8 @@ defmodule Minishop.ProductControllerTest do
   use Minishop.ConnCase
 
   alias Minishop.Product
-  @valid_attrs %{description: "some content", image_url: "some content", price: "120.5", title: "some content"}
+  @valid_attrs %{description: "some content", image_url: "some content", price:
+    "120.5", title: "some content", sku: "1111"}
   @invalid_attrs %{}
 
   test "lists all entries on index", %{conn: conn} do

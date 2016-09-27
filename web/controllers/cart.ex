@@ -34,12 +34,12 @@ defmodule Minishop.Cart do
     # IO.inspect(conn.cookies["_minishop_key"])
     #    IO.inspect(conn)
 
-    case cart_key = conn.cookies["cart_key"] do
+    cart_key = conn.cookies["cart_key"]
+    cart_key = case cart_key do
       nil -> token = to_string(random(100000))
             IO.puts "rtoken #{token}"
             cart_key = Phoenix.Token.sign(conn, "cart_key", token)
-            conn = Plug.Conn.put_resp_cookie(conn, "cart_key", cart_key)
-            IO.puts "new cart key #{cart_key}"
+            #            IO.puts "new cart key #{cart_key}"
       # "" -> token = to_string(random(100000))
       #       IO.puts "rtoken #{token}"
       #       cart_key = Phoenix.Token.sign(conn, "cart_key", token)
@@ -48,6 +48,8 @@ defmodule Minishop.Cart do
       _ -> cart_key
     end
 
+    #TODO: this is called unessisarily if the cart_key existed
+    conn = Plug.Conn.put_resp_cookie(conn, "cart_key", cart_key)
     #    IO.inspect conn
     IO.inspect cart_key
     {:ok, cart_key} = Phoenix.Token.verify(conn, "cart_key", cart_key)
@@ -63,13 +65,13 @@ defmodule Minishop.Cart do
   # this random number generator is horrible; need to
   # come up with a better plan
   def random(number) do
-    reseed_generator()
-    :random.uniform(number)
+  #    reseed_generator()
+    :rand.uniform(number)
   end
     
   def reseed_generator do
     # :random.seed(:os.timestamp())
-    :random.seed(:erlang.phash2([:erlang.node()]),
+    :rand.seed(:erlang.phash2([:erlang.node()]),
                 :erlang.monotonic_time(),
                 :erlang.unique_integer())
     :ok

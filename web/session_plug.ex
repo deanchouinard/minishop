@@ -1,4 +1,4 @@
-defmodule Minishop.Cart do
+defmodule Minishop.SessionPlug do
 #  @on_load :reseed_generator
   import Plug.Conn
   

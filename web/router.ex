@@ -7,7 +7,7 @@ defmodule Minishop.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug Minishop.Cart, repo: Minishop.Repo
+    plug Minishop.SessionPlug, repo: Minishop.Repo
   end
 
   pipeline :api do

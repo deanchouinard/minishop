@@ -19,7 +19,8 @@ defmodule Minishop.Mixfile do
   def application do
     [mod: {Minishop, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger,
-                    :gettext, :phoenix_ecto, :postgrex, :gproc]]
+                    :gettext, :phoenix_ecto, :postgrex, :gproc,
+                    :comeonin ]]
   end
 
   # Specifies which paths to compile per environment.
@@ -39,7 +40,8 @@ defmodule Minishop.Mixfile do
      {:cowboy, "~> 1.0"},
      {:monetized, "~> 0.4.0"},
      {:decimal, "~> 1.1.2"},
-     {:gproc, "0.3.1"}
+     {:gproc, "0.3.1"},
+     {:comeonin, "~> 2.0"}
    ]
   end
 

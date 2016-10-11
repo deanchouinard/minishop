@@ -22,6 +22,32 @@ SET default_tablespace = '';
 
 SET default_with_oids = false;
 
+----
+create table users (
+  id integer NOT NULL,
+  name varchar(255),
+  username varchar(255),
+  password_hash varchar(255),
+  inserted_at timestamp without time zone NOT NULL,
+  updated_at timestamp without time zone NOT NULL
+);
+alter table public.users owner to postgres;
+
+create sequence user_id_seq
+  start with 1
+  increment by 1
+  no minvalue
+  no maxvalue
+  cache 1;
+
+ALTER TABLE public.user_id_seq OWNER TO postgres;
+ALTER SEQUENCE user_id_seq  OWNED BY users.id;
+ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('user_id_seq'::regclass);
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+CREATE UNIQUE INDEX username_index ON users USING btree (username);
 --
 -- Name: line_items; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --

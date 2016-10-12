@@ -36,6 +36,7 @@ defmodule Minishop.Web do
 
       import Minishop.Router.Helpers
       import Minishop.Gettext
+      import Minishop.Auth, only: [authenticate_user: 2]
       import Minishop.Controllers.Helpers
 
     end
@@ -61,6 +62,7 @@ defmodule Minishop.Web do
   def router do
     quote do
       use Phoenix.Router
+      import Minishop.Auth, only: [authenticate_user: 2]
     end
   end
 

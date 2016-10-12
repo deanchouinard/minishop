@@ -8,6 +8,7 @@ defmodule Minishop.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug Minishop.SessionPlug, repo: Minishop.Repo
+    plug Minishop.Auth, repo: Minishop.Repo
   end
 
   pipeline :api do
@@ -34,10 +35,13 @@ defmodule Minishop.Router do
     get "/orders/show/:id", OrderController, :show
     post "/orders/create", OrderController, :create
 
+    resources "/users", UserController, only: [:index, :show, :new, :create]
+    resources "/sessions", SessionController, only: [:new, :create, :delete]
+
   end
 
   scope "/manage", Minishop do
-    pipe_through :browser
+    pipe_through [:browser, :authenticate_user]
 
     resources "/products", ProductController
 #    resources "/orders", OrderController

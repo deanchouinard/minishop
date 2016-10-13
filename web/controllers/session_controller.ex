@@ -2,15 +2,15 @@ defmodule Minishop.SessionController do
   use Minishop.Web, :controller
   import Plug.Conn
 
-  def add(conn, %{"session" => %{"product" => prod}}) do
-    cart = get_session(conn, :cart) || []
-    # conn = assign(conn, :product, prod)
-    IO.inspect(cart)
-    cart = List.insert_at(cart, -1, prod)
-    conn = put_session(conn, :cart, cart)
-    redirect(conn, to: page_path(conn, :index))
-
-  end
+  # def add(conn, %{"session" => %{"product" => prod}}) do
+  #   cart = get_session(conn, :cart) || []
+  #   # conn = assign(conn, :product, prod)
+  #   IO.inspect(cart)
+  #   cart = List.insert_at(cart, -1, prod)
+  #   conn = put_session(conn, :cart, cart)
+  #   redirect(conn, to: page_path(conn, :index))
+  #
+  # end
 
   def add_to_cart(conn, %{"id" => prod}) do
     prod = %{qty: 1, product_id: String.to_integer(prod)}
@@ -81,12 +81,12 @@ defmodule Minishop.SessionController do
     |> redirect(to: page_path(conn, :index))
   end
 
-  defp update_cart(cart, prod, index) do
-
-    item = Enum.fetch!(cart, index)
-    item = Map.update!(item, :qty, &(&1 + prod.qty))
-    cart = List.replace_at(cart, index, item)
-  end
+  # defp update_cart(cart, prod, index) do
+  #
+  #   item = Enum.fetch!(cart, index)
+  #   item = Map.update!(item, :qty, &(&1 + prod.qty))
+  #   cart = List.replace_at(cart, index, item)
+  # end
 
 end
 

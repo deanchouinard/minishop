@@ -8,6 +8,7 @@ defmodule Minishop.OrderController do
 
   import Ecto.Query
 
+  plug :authenticate_user
   plug :scrub_params, "order" when action in [:create, :update]
 
   plug :load_pay_types when action in [:new, :create, :edit, :update]

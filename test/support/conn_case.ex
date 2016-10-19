@@ -26,6 +26,7 @@ defmodule Minishop.ConnCase do
       import Ecto.Query, only: [from: 1, from: 2]
 
       import Minishop.Router.Helpers
+      import Minishop.TestHelpers
 
       # The default endpoint for testing
       @endpoint Minishop.Endpoint

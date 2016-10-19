@@ -13,9 +13,9 @@ defmodule Minishop.TestHelpers do
     |> Repo.insert!()
   end
 
-  def insert_line_item(user, attrs \\ %{}) do
+  def insert_order(user, attrs \\ %{}) do
     user
-    |> Ecto.build_assoc(:line_items, attrs)
+    |> Ecto.build_assoc(:orderss, attrs)
     |> Repo.insert!()
   end
 end

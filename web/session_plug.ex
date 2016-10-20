@@ -1,11 +1,5 @@
 defmodule Minishop.SessionPlug do
-#  @on_load :reseed_generator
   import Plug.Conn
-  
-  # defmodule Item do
-  #   defstruct prod_id: nil, qty: nil
-  # end
-  
 
   def init(opts) do
     Keyword.fetch!(opts, :repo)
@@ -31,20 +25,8 @@ defmodule Minishop.SessionPlug do
     conn
   end
 
-  # this random number generator is horrible; need to
-  # come up with a better plan
-  def random(number) do
-  #    reseed_generator()
+  defp random(number) do
     :rand.uniform(number)
   end
-    
-  def reseed_generator do
-    # :random.seed(:os.timestamp())
-    :rand.seed(:erlang.phash2([:erlang.node()]),
-                :erlang.monotonic_time(),
-                :erlang.unique_integer())
-    :ok
-  end
-
 end
 

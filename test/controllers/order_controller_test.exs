@@ -2,18 +2,16 @@ defmodule Minishop.OrderControllerTest do
   use Minishop.ConnCase
 
   alias Minishop.Order
+  alias Minishop.Pay_Type
   @valid_attrs %{address: "some content", email: "some content", name: "some
-  content", pay_type_id: 1}
+  content"}
   @invalid_attrs %{}
 
-  setup %{conn: conn} = config do
-    if username = config[:login_as] do
-      user = insert_user(username: username)
-      conn = assign(conn, :current_user, user)
-      {:ok, conn: conn, user: user}
-    else
-      :ok
-    end
+  setup do
+    {:ok, pay_type} = Pay_Type.changeset(%Pay_Type{}, %{code: "cc",
+      description: "Credit Card"}) |> Repo.insert
+    valid_attrs = Dict.merge(%{pay_type_id: pay_type.id}, @valid_attrs)
+    {:ok, valid_attrs: valid_attrs}
   end
 
   test "requires user authentication on all actions", %{conn: conn} do
@@ -43,11 +41,12 @@ defmodule Minishop.OrderControllerTest do
     assert html_response(conn, 200) =~ "New order"
   end
 
-  @tag :skip
-  test "creates resource and redirects when data is valid", %{conn: conn} do
-    conn = post conn, order_path(conn, :create), order: @valid_attrs
-    assert redirected_to(conn) == order_path(conn, :index )
-    assert Repo.get_by(Order, @valid_attrs)
+  @tag login_as: "max"
+  test "creates resource and redirects when data is valid", %{conn: conn,
+    valid_attrs: valid_attrs} do
+    conn = post conn, order_path(conn, :create), order: valid_attrs
+    assert order = Repo.get_by(Order, valid_attrs)
+    assert redirected_to(conn) == order_path(conn, :show, order.id )
   end
 
   @tag login_as: "max"

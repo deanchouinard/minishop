@@ -5,16 +5,6 @@ defmodule Minishop.Line_ItemControllerTest do
   @valid_attrs %{quantity: 42, total_price: "120.5"}
   @invalid_attrs %{}
 
-  setup %{conn: conn} = config do
-    if username = config[:login_as] do
-      user = insert_user(username: username)
-      conn = assign(conn, :current_user, user)
-      {:ok, conn: conn, user: user}
-    else
-      :ok
-    end
-  end
-
   test "requires user authentication on all actions", %{conn: conn} do
     Enum.each([
       get(conn, line__item_path(conn, :new)),

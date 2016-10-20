@@ -15,5 +15,5 @@ config :minishop, Minishop.Repo,
   username: "postgres",
   password: "postgres",
   database: "minishop_test",
-  hostname: "localhost",
+  hostname: "dbserver",
   pool: Ecto.Adapters.SQL.Sandbox

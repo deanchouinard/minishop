@@ -7,11 +7,12 @@ defmodule Minishop.Order do
     field :email, :string
     has_many :line_items, Minishop.Line_Item
     belongs_to :pay_type, Minishop.Pay_Type
+    belongs_to :user, Minishop.User
 
     timestamps
   end
 
-  @required_fields ~w(name address email pay_type_id)
+  @required_fields ~w(name address email pay_type_id user_id)
   @optional_fields ~w()
 
   @doc """

@@ -7,10 +7,10 @@ defmodule Minishop.OrderControllerTest do
   content"}
   @invalid_attrs %{}
 
-  setup do
+  setup %{user: user} do
     {:ok, pay_type} = Pay_Type.changeset(%Pay_Type{}, %{code: "cc",
       description: "Credit Card"}) |> Repo.insert
-    valid_attrs = Dict.merge(%{pay_type_id: pay_type.id}, @valid_attrs)
+    valid_attrs = Dict.merge(%{pay_type_id: pay_type.id, user_id: user.id}, @valid_attrs)
     {:ok, valid_attrs: valid_attrs}
   end
 
@@ -43,10 +43,12 @@ defmodule Minishop.OrderControllerTest do
 
   @tag login_as: "max"
   test "creates resource and redirects when data is valid", %{conn: conn,
-    valid_attrs: valid_attrs} do
+    valid_attrs: valid_attrs, user: user} do
+    IO.inspect valid_attrs
     conn = post conn, order_path(conn, :create), order: valid_attrs
-    assert order = Repo.get_by(Order, valid_attrs)
+    order = Repo.get_by(Order, valid_attrs)
     assert redirected_to(conn) == order_path(conn, :show, order.id )
+    assert order.user_id == user.id
   end
 
   @tag login_as: "max"

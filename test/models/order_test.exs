@@ -4,7 +4,7 @@ defmodule Minishop.OrderTest do
   alias Minishop.Order
 
   @valid_attrs %{address: "some content", email: "some content", name: "some
-  content", pay_type_id: 2}
+  content", pay_type_id: 2, user_id: 1}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

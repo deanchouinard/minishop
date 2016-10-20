@@ -97,7 +97,8 @@ CREATE TABLE orders (
     email character varying(255),
     inserted_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    pay_type_id integer
+    pay_type_id integer,
+    user_id integer
 );
 
 
@@ -124,6 +125,7 @@ ALTER TABLE public.orders_id_seq OWNER TO postgres;
 ALTER SEQUENCE orders_id_seq OWNED BY orders.id;
 
 
+CREATE INDEX orders_user_id_index ON orders USING btree (user_id);
 --
 -- Name: pay_types; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -407,6 +409,9 @@ ALTER TABLE ONLY line_items
 
 ALTER TABLE ONLY orders
     ADD CONSTRAINT orders_pay_type_id_fkey FOREIGN KEY (pay_type_id) REFERENCES pay_types(id);
+
+alter table only orders
+  add constraint orders_user_id_fkey foreign key (user_id) references users(id);
 
 
 --

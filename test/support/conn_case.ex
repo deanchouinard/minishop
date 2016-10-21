@@ -48,7 +48,7 @@ defmodule Minishop.ConnCase do
       conn = assign(conn, :current_user, user)
       {:ok, conn: conn, user: user}
     else
-      {:ok, conn: conn}
+      {:ok, conn: conn, user: %Minishop.User{}}
       #{:ok, conn: Phoenix.ConnTest.conn()}
     end
   end

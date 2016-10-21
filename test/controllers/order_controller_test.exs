@@ -57,9 +57,10 @@ defmodule Minishop.OrderControllerTest do
     assert html_response(conn, 200) =~ "New order"
   end
 
-  @tag :skip
-  test "shows chosen resource", %{conn: conn} do
-    order = Repo.insert! %Order{}
+  @tag login_as: "max"
+  test "shows chosen resource", %{conn: conn, valid_attrs: valid_attrs} do
+    {:ok, order} = Order.changeset(%Order{}, valid_attrs) |> Repo.insert
+    # order = Repo.insert! %Order{valid_attrs}
     conn = get conn, order_path(conn, :show, order)
     assert html_response(conn, 200) =~ "Show order"
   end

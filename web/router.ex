@@ -22,7 +22,8 @@ defmodule Minishop.Router do
     get "/category_search/:id", PageController, :category_search
     get "/display_product/:id", PageController, :display_product
     get "/your_cart", PageController, :your_cart
-    get "/checkout", PageController, :checkout
+    # get "/checkout", PageController, :checkout
+    get "/checkout", OrderController, :new
 
     #    post "/", SessionController, :add
     get "/session/clear", SessionController, :clear

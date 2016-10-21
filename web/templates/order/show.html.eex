@@ -8,6 +8,11 @@
   </li>
 
   <li>
+    <strong>User #</strong>
+    <%= @order.user_id %>
+  </li>
+  
+  <li>
     <strong>Name:</strong>
     <%= @order.name %>
   </li>

@@ -14,7 +14,7 @@ defmodule Minishop.OrderController do
   plug :load_pay_types when action in [:new, :create, :edit, :update]
   
   def index(conn, _params) do
-    orders = Repo.all(Order)
+    orders = Repo.all(user_orders(conn.assigns.current_user))
     render(conn, "index.html", orders: orders)
   end
 
@@ -22,12 +22,19 @@ defmodule Minishop.OrderController do
     cart = conn.assigns.cart
     dcart = build_display_cart(cart)
 
-    changeset = Order.changeset(%Order{})
+    changeset = 
+      conn.assigns.current_user
+      |> build_assoc(:orders)
+      |> Order.changeset()
+
     render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"order" => order_params}) do
-    changeset = Order.changeset(%Order{}, order_params)
+    changeset =
+      conn.assigns.current_user
+      |> build_assoc(:orders)
+      |> Order.changeset(order_params)
 
     #    IO.inspect(changeset)
 
@@ -62,7 +69,7 @@ defmodule Minishop.OrderController do
   end
 
   def show(conn, %{"id" => id}) do
-    order = Repo.get!(Order, id)
+    order = Repo.get!(user_orders(conn.assigns.current_user), id)
     line_items = Repo.all from i in Line_Item,
       where: i.order_id == ^id
 
@@ -106,6 +113,10 @@ defmodule Minishop.OrderController do
     cart = Tcart.Server.list(cart_pid)
     Enum.each(cart, fn(c) -> Tcart.Server.delete_item(cart_pid, c.id) end)
     conn = assign(conn, :cart, cart)
+  end
+
+  defp user_orders(user) do
+    assoc(user, :orders)
   end
 
 end

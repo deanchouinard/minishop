@@ -23,5 +23,5 @@
   <p>Total:  <%= decimal_to_currency(cart_total(@dcart)) %></p>
 
 <%= link "Clear Session", to: session_path(@conn, :clear), class: "btn btn-default btn-xs"  %>
-<%= link "Checkout", to: page_path(@conn, :checkout), class: "btn btn-primary btn-md"  %>
+<%= link "Checkout", to: order_path(@conn, :new), class: "btn btn-primary btn-md"  %>
 </div>

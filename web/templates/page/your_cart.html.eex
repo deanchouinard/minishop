@@ -27,7 +27,7 @@
       </table>
       <p><b>Total:  <%= decimal_to_currency(cart_total(@dcart)) %></b></p>
 
-      <%= link "Checkout", to: page_path(@conn, :checkout), class: "btn btn-primary btn-md"  %>
+      <%= link "Checkout", to: order_path(@conn, :new), class: "btn btn-primary btn-md"  %>
     </div>
     </div>
     <div class="col-md-2">

@@ -6,7 +6,13 @@ defmodule Minishop.OrderView do
   import Ecto.Query
   alias Minishop.Repo
   alias Minishop.Product
+  alias Minishop.User
 
+  def username(user_id) do
+    Repo.one from u in User,
+      where: u.id == ^user_id,
+      select: u.username
+  end
 
   def product_title(prod_id) do
     Repo.one from p in Product,

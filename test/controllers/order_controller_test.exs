@@ -29,7 +29,7 @@ defmodule Minishop.OrderControllerTest do
     end)
   end
 
-  @tag :skip
+  @tag login_as: "max"
   test "lists all entries on index", %{conn: conn} do
     conn = get conn, order_path(conn, :index)
     assert html_response(conn, 200) =~ "Listing orders"

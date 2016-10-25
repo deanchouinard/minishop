@@ -17,7 +17,7 @@ defmodule Minishop.OrderControllerTest do
   test "requires user authentication on all actions", %{conn: conn} do
     Enum.each([
       get(conn, order_path(conn, :new)),
-      #get(conn, order_path(conn, :index)),
+      get(conn, order_path(conn, :index)),
       get(conn, order_path(conn, :show, "123")),
       #get(conn, order_path(conn, :edit, "123")),
       #put(conn, order_path(conn, :update, "123", %{})),
@@ -71,6 +71,19 @@ defmodule Minishop.OrderControllerTest do
       get conn, order_path(conn, :show, -1)
     end
   end
+
+  @tag login_as: "max"
+  test "authorizes actions against access by other users",
+    %{user: owner, conn: conn, valid_attrs: valid_attrs} do
+
+      order = insert_order(owner, valid_attrs)
+      non_owner = insert_user(username: "sneaky")
+      conn = assign(conn, :current_user, non_owner)
+
+      assert_error_sent :not_found, fn ->
+        get(conn, order_path(conn, :show, order))
+      end
+    end
 
   @tag :skip
   test "renders form for editing chosen resource", %{conn: conn} do

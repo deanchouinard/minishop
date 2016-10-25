@@ -1,2 +1,15 @@
-<h1>Showing User</h1>
-<%= render "user.html", user: @user %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8">
+      <h1>User Profile</h1>
+      <%= render "user.html", user: @user %>
+      <h3>Orders</h3>
+      <%= render Minishop.SharedView, "order_list.html", [conn: @conn, orders:
+        @orders] %>
+    </div>
+    <div class="col-md-2">
+    </div>
+  </div>
+</div>

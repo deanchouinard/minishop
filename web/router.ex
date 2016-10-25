@@ -32,6 +32,7 @@ defmodule Minishop.Router do
 
     get "/store", StoreController, :index
     get "/store/checkout", StoreController, :checkout
+    get "/orders", OrderController, :index
     get "/orders/new", OrderController, :new
     get "/orders/show/:id", OrderController, :show
     post "/orders/create", OrderController, :create

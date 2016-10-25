@@ -1,5 +1,7 @@
 defmodule Minishop.UserController do
   use Minishop.Web, :controller
+  # alias Minishop.Order
+
   plug :authenticate_user when action in [:index, :show]
 
   def index(conn, _params) do
@@ -14,7 +16,10 @@ defmodule Minishop.UserController do
 
   def show(conn, %{"id" => id}) do
     user = Repo.get(Minishop.User, id)
-    render conn, "show.html", user: user
+    orders = Repo.all(assoc(user, :orders))
+    orders = Repo.preload(orders, :pay_type)
+
+    render conn, "show.html", user: user, orders: orders
   end
 
   alias Minishop.User

@@ -1,14 +1,14 @@
-defmodule Rumbl.CategoryRepoTest do
-  use Rumbl.ModelCase
-  alias Rumbl.Category
+defmodule Minishop.Pay_TypeRepoTest do
+  use Minishop.ModelCase
+  alias Minishop.Pay_Type
 
-  test "alphabetical/1 orders by name" do
-    Repo.insert!(%Category{name: "c"})
-    Repo.insert!(%Category{name: "a"})
-    Repo.insert!(%Category{name: "b"})
+  test "alphabetical/1 orders by code" do
+    Repo.insert!(%Pay_Type{code: "c"})
+    Repo.insert!(%Pay_Type{code: "a"})
+    Repo.insert!(%Pay_Type{code: "b"})
 
-    query = Category |> Category.alphabetical()
-    query = from c in query, select: c.name
+    query = Pay_Type |> Pay_Type.alphabetical()
+    query = from c in query, select: c.code
     assert Repo.all(query) == ~w(a b c)
   end
 end

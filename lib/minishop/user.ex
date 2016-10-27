@@ -15,6 +15,7 @@ defmodule Minishop.User do
     model
     |> cast(params, ~w(name username), [])
     |> validate_length(:username, min: 1, max: 20)
+    |> unique_constraint(:username, name: :username_index)
   end
 
   def registration_changeset(model, params) do

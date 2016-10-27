@@ -1,6 +1,6 @@
-defmodule Rumbl.UserRepoTest do
-  use Rumbl.ModelCase
-  alias Rumbl.User
+defmodule Minishop.UserRepoTest do
+  use Minishop.ModelCase
+  alias Minishop.User
 
   @valid_attrs %{name: "A User", username: "eva"}
 

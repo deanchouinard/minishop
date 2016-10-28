@@ -23,6 +23,7 @@ defmodule Minishop.Router do
     get "/display_product/:id", PageController, :display_product
     get "/your_cart", PageController, :your_cart
     # get "/checkout", PageController, :checkout
+    get "/orders/new", OrderController, :new
     get "/checkout", OrderController, :new
 
     #    post "/", SessionController, :add
@@ -33,7 +34,6 @@ defmodule Minishop.Router do
     get "/store", StoreController, :index
     get "/store/checkout", StoreController, :checkout
     get "/orders", OrderController, :index
-    get "/orders/new", OrderController, :new
     get "/orders/show/:id", OrderController, :show
     post "/orders/create", OrderController, :create
 

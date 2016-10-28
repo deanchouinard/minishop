@@ -27,7 +27,13 @@ defmodule Minishop.OrderController do
       |> build_assoc(:orders)
       |> Order.changeset()
 
-    render(conn, "new.html", changeset: changeset)
+      user = conn.assigns.current_user
+      #    changeset = preload(changeset, :users)
+      # IO.inspect changeset
+
+      #    render(conn, "new.html", changeset: changeset)
+    render(conn, "checkout.html", %{changeset: changeset, dcart: dcart,
+         user: user})
   end
 
   def create(conn, %{"order" => order_params}) do

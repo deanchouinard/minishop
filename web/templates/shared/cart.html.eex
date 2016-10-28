@@ -1,0 +1,22 @@
+
+        <table class="table">
+        <thead>
+          <tr>
+            <th> Qty </th>
+            <th> SKU </th>
+          <th> Title </th>
+            <th> Price </th>
+          </tr>
+        </thead>
+        <tbody>
+        <%= for item <- @dcart do %>
+          <tr>
+            <td><b><%= item.qty %></b></td>
+            <td><b><%= item.sku %></b></td>
+            <td><b><%= item.title %></b></td>
+            <td><b><%= decimal_to_currency(item.price) %></b></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <p><b>Total:  <%= decimal_to_currency(cart_total(@dcart)) %></b></p>

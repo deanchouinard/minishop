@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-2">
+      <b><%= @user.name %></b>
+    </div>
+    <div class="col-md-8">
+<h2>Checkout</h2>
+
+
+<%= render Minishop.SharedView, "cart.html", %{dcart: @dcart, conn: @conn} %>
+
+<%= form_for @changeset, order_path(@conn, :create), fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :pay_type_id, class: "control-label" %>
+    <%= select f, :pay_type_id, @pay_types, class: "form-control",
+      prompt: "Choose a pay type" %>
+    <%= error_tag f, :pay_type_id %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+
+<%= link "Back", to: store_path(@conn, :index) %>
+    </div>
+    <div class="col-md-2">
+    </div>
+  </div>
+</div>

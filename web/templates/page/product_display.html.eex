@@ -31,7 +31,7 @@
   </li>
 
 </ul>
-        <%= link "Add to Cart", to: session_path(@conn, :add_to_cart,
+        <%= link "Add to Cart", to: cart_path(@conn, :add_to_cart,
         @product.id), class: "btn btn-default btn-xs" %>
     </div>
 

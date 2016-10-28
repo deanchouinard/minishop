@@ -18,18 +18,8 @@
   </li>
 
   <li>
-    <strong>Name:</strong>
-    <%= @order.name %>
-  </li>
-
-  <li>
-    <strong>Address:</strong>
-    <%= @order.address %>
-  </li>
-
-  <li>
-    <strong>Email:</strong>
-    <%= @order.email %>
+    <strong>Date</strong>
+    <%= @order.inserted_at %>
   </li>
 
   <li>

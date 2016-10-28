@@ -3,9 +3,7 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th>Name</th>
-      <th>Address</th>
-      <th>Email</th>
+      <th>Date</th>
       <th>Pay type</th>
 
       <th></th>
@@ -15,9 +13,7 @@
 <%= for order <- @orders do %>
     <tr>
       <td><%= link order.id, to: order_path(@conn, :show, order) %>
-      <td><%= order.name %></td>
-      <td><%= order.address %></td>
-      <td><%= order.email %></td>
+      <td><%= order.inserted_at %></td>
       <td><%= order.pay_type.code %></td>
 
       <td class="text-right">

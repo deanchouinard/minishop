@@ -27,6 +27,7 @@ create table users (
   id integer NOT NULL,
   name varchar(255),
   username varchar(255),
+  email varchar(255),
   password_hash varchar(255),
   inserted_at timestamp without time zone NOT NULL,
   updated_at timestamp without time zone NOT NULL
@@ -48,6 +49,35 @@ ALTER TABLE ONLY users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
 
 CREATE UNIQUE INDEX username_index ON users USING btree (username);
+
+-- Addresses
+
+create table addresses (
+  id integer not null,
+  address1 varchar(255),
+  address2 varchar(255),
+  city varchar(255),
+  state char(2),
+  zipcode char(11),
+  phone char(11),
+  user_id integer not null,
+  inserted_at timestamp without time zone NOT NULL,
+  updated_at timestamp without time zone NOT NULL
+);
+
+create sequence address_id_seq
+  start with 1
+  increment by 1
+  no minvalue
+  no maxvalue
+  cache 1;
+
+ALTER TABLE public.address_id_seq OWNER TO postgres;
+ALTER SEQUENCE address_id_seq  OWNED BY addresses.id;
+ALTER TABLE ONLY addresses ALTER COLUMN id SET DEFAULT nextval('address_id_seq'::regclass);
+
+ALTER TABLE ONLY addresses
+    ADD CONSTRAINT address_pkey PRIMARY KEY (id);
 --
 -- Name: line_items; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -93,8 +123,6 @@ ALTER SEQUENCE line_items_id_seq OWNED BY line_items.id;
 CREATE TABLE orders (
     id integer NOT NULL,
     name character varying(255),
-    address text,
-    email character varying(255),
     inserted_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     pay_type_id integer,
@@ -413,6 +441,8 @@ ALTER TABLE ONLY orders
 alter table only orders
   add constraint orders_user_id_fkey foreign key (user_id) references users(id);
 
+alter table only addresses
+  add constraint addresses_user_id_fkey foreign key (user_id) references users(id);
 
 --
 -- Name: public; Type: ACL; Schema: -; Owner: dean

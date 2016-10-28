@@ -1,9 +1,14 @@
-defmodule Minishop.Order do
+defmodule Minishop.Address do
   use Minishop.Web, :model
 
-  schema "orders" do
-    has_many :line_items, Minishop.Line_Item
-    belongs_to :pay_type, Minishop.Pay_Type
+  schema "addresses" do
+    field :address1, :string
+    field :address2, :string
+    field :city, :string
+    field :state, :string
+    field :zipcode, :string
+    field :phone, :string
+
     belongs_to :user, Minishop.User
 
     timestamps

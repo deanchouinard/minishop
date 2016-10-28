@@ -6,4 +6,7 @@
 <br>
 <strong>Username:</strong>
 <%= @user.username %>
+<br/>
+<strong>Email:</strong>
+<%= @user.email %>
 <b><%= # first_name(@user) %></b> (<%= #@user.id %>)

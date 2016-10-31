@@ -3,8 +3,9 @@ defmodule Minishop.OrderControllerTest do
 
   alias Minishop.Order
   alias Minishop.Pay_Type
-  @valid_attrs %{address: "some content", email: "some content", name: "some
-  content"}
+#  @valid_attrs %{address: "some content", email: "some content", name: "some
+#  content"}
+  @valid_attrs %{}
   @invalid_attrs %{}
 
   setup %{user: user} do
@@ -38,7 +39,7 @@ defmodule Minishop.OrderControllerTest do
   @tag login_as: "max"
   test "renders form for new resources", %{conn: conn} do
     conn = get conn, order_path(conn, :new)
-    assert html_response(conn, 200) =~ "New order"
+    assert html_response(conn, 200) =~ "Checkout"
   end
 
   @tag login_as: "max"

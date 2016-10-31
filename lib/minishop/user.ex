@@ -8,6 +8,7 @@ defmodule Minishop.User do
     field :password, :string, virtual: true
     field :password_hash, :string
     has_many :orders, Minishop.Order
+    has_many :addresses, Minishop.Address
 
     timestamps
   end

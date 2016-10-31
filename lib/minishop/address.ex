@@ -14,8 +14,8 @@ defmodule Minishop.Address do
     timestamps
   end
 
-  @required_fields ~w(pay_type_id user_id)
-  @optional_fields ~w()
+  @required_fields ~w(address1 city state zipcode user_id)
+  @optional_fields ~w(address2 phone)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

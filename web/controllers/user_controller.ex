@@ -16,10 +16,11 @@ defmodule Minishop.UserController do
 
   def show(conn, %{"id" => id}) do
     user = Repo.get(Minishop.User, id)
+    addresses = Repo.all(assoc(user, :addresses))
     orders = Repo.all(assoc(user, :orders))
     orders = Repo.preload(orders, :pay_type)
 
-    render conn, "show.html", user: user, orders: orders
+    render conn, "show.html", user: user, orders: orders, addresses: addresses
   end
 
   alias Minishop.User

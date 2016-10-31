@@ -1,0 +1,36 @@
+
+<h2>Listing addresses</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Address1</th>
+      <th>Address2</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Zip Code</th>
+      <th>Telephone</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for address <- @addresses do %>
+    <tr>
+      <td><%= address.address1 %></td>
+      <td><%= address.address2 %></td>
+      <td><%= address.city %></td>
+      <td><%= address.state %></td>
+      <td><%= address.zipcode %></td>
+      <td><%= address.telephone %></td>
+
+      <td class="text-right">
+        <%= #link "Show", to: order_path(@conn, :show, order), class: "btn btn-default btn-xs" %>
+        <%= # link "Edit", to: order_path(@conn, :edit, order), class: "btn btn-default btn-xs" %>
+        <%= # link "Delete", to: order_path(@conn, :delete, order), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= # link "Show user", to: user_path(@conn, :show, address.user_id) %>

@@ -1,8 +1,9 @@
 defmodule Minishop.CartController do
   use Minishop.Web, :controller
-  
-  def add_to_cart(conn, %{"id" => prod}) do
-    prod = %{qty: 1, product_id: String.to_integer(prod)}
+  require Logger
+
+  def add_to_cart(conn, %{"id" => prod_id}) do
+    prod = %{qty: 1, product_id: String.to_integer(prod_id)}
     IO.inspect(prod)
     conn = add_prod_to_cart(conn, prod)
     redirect(conn, to: page_path(conn, :index))
@@ -14,7 +15,7 @@ defmodule Minishop.CartController do
 
     IO.puts "add prod to cart"
 #     IO.inspect cart_key
-    IO.inspect prod
+    Logger.info fn -> inspect prod end
 
     case item = Tcart.Server.line_items(cart_pid, prod.product_id) do
       [] -> Tcart.Server.add_item(cart_pid, prod)
@@ -37,7 +38,7 @@ defmodule Minishop.CartController do
     # conn = assign(conn, :product, prod)
     IO.inspect(cart)
     # conn = put_session(conn, :cart, cart)
-    conn = assign(conn, :cart, cart)
+    _conn = assign(conn, :cart, cart)
   end
 end
 

@@ -5,6 +5,10 @@
     <div class="col-md-8">
       <h1>User Profile</h1>
       <%= render "user.html", user: @user %>
+      <h2>Addresses</h2>
+      <%= link "Add Address", to: address_path(@conn, :new) %>
+      <%= render Minishop.AddressView, "index.html", [conn: @conn, user: @user,
+      addresses: @addresses] %>
       <h3>Orders</h3>
       <%= render Minishop.SharedView, "order_list.html", [conn: @conn, orders:
         @orders] %>

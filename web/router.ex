@@ -39,6 +39,8 @@ defmodule Minishop.Router do
 
     resources "/users", UserController, only: [:index, :show, :new, :create]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
+    resources "/addresses", AddressController, only: [:index, :show, :new,
+      :create]
 
   end
 

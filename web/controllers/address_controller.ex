@@ -36,7 +36,7 @@ defmodule Minishop.AddressController do
       {:ok, address} ->
         conn
         |> put_flash(:info, "Address created successfully.")
-        |> redirect(to: address_path(conn, :show, address.id))
+        |> redirect(to: user_path(conn, :show, conn.assigns.current_user.id))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end

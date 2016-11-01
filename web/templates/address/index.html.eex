@@ -21,7 +21,7 @@
       <td><%= address.city %></td>
       <td><%= address.state %></td>
       <td><%= address.zipcode %></td>
-      <td><%= address.telephone %></td>
+      <td><%= address.phone %></td>
 
       <td class="text-right">
         <%= #link "Show", to: order_path(@conn, :show, order), class: "btn btn-default btn-xs" %>

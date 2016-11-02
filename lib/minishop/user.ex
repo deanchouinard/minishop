@@ -15,8 +15,9 @@ defmodule Minishop.User do
 
   def changeset(model, params \\ :empty) do
     model
-    |> cast(params, ~w(name username), [])
+    |> cast(params, ~w(name username email), [])
     |> validate_length(:username, min: 1, max: 20)
+    |> validate_format(:email, ~r/@/)
     |> unique_constraint(:username, name: :username_index)
   end
 

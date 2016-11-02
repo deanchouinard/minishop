@@ -14,8 +14,10 @@ defmodule Minishop.UserController do
         #end
   end
 
-  def show(conn, %{"id" => id}) do
-    user = Repo.get(Minishop.User, id)
+  #def show(conn, %{"id" => id}) do
+  def show(conn, _params) do
+    # user = Repo.get(Minishop.User, id)
+    user = conn.assigns.current_user
     addresses = Repo.all(assoc(user, :addresses))
     orders = Repo.all(assoc(user, :orders))
     orders = Repo.preload(orders, :pay_type)
@@ -37,7 +39,7 @@ defmodule Minishop.UserController do
         conn
         |> Minishop.Auth.login(user)
         |> put_flash(:info, "#{user.name} created!")
-        |> redirect(to: user_path(conn, :index))
+        |> redirect(to: page_path(conn, :index))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end

@@ -28,13 +28,13 @@
   </li>
 
   <li>
+    <strong>Shipping Address</strong>
+    <%= display_ship_address(@order.ship_address_id) %>
+  </li>
+
+  <li>
     <strong>Pay type:</strong>
     <%= display_pay_type(@order.pay_type_id) %>
-  </li>
-  
-  <li>
-    <strong>Line items:</strong>
-    <%= display_line_items(@order.id) %>
   </li>
   
   <table class="table">

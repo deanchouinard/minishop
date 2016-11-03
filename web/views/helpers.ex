@@ -13,6 +13,14 @@ defmodule Minishop.Views.Helpers do
       select: p.description
   end
 
+  def display_ship_address(id) do
+    {address, city, state} = Repo.one from a in Minishop.Address,
+      where: a.id == ^id,
+      select: {a.address1, a.city, a.state}
+
+    [address, ", ", city, " ", state]
+  end
+
   def decimal_to_currency(val) do
 #    IO.puts "dtc"
 #    IO.inspect val

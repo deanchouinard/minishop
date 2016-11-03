@@ -122,11 +122,11 @@ ALTER SEQUENCE line_items_id_seq OWNED BY line_items.id;
 
 CREATE TABLE orders (
     id integer NOT NULL,
-    name character varying(255),
     inserted_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     pay_type_id integer,
-    user_id integer
+    user_id integer,
+    ship_address_id integer
 );
 
 
@@ -443,6 +443,10 @@ alter table only orders
 
 alter table only addresses
   add constraint addresses_user_id_fkey foreign key (user_id) references users(id);
+
+alter table only orders
+  add constraint orders_ship_address_id_fkey foreign key (ship_address_id)
+  references addresses(id);
 
 --
 -- Name: public; Type: ACL; Schema: -; Owner: dean

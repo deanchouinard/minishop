@@ -5,12 +5,13 @@ defmodule Minishop.Order do
     has_many :line_items, Minishop.Line_Item
     belongs_to :pay_type, Minishop.Pay_Type
     belongs_to :user, Minishop.User
+    belongs_to :ship_address, Minishop.Address
 
     timestamps
   end
 
   @required_fields ~w(pay_type_id user_id)
-  @optional_fields ~w()
+  @optional_fields ~w(ship_address_id)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

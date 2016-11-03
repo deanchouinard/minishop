@@ -27,9 +27,9 @@ defmodule Minishop.Address do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> validate_length(:state, is: 2)
-    |> validate_format(:zipcode, ~r/[0..9]+/)
+    |> validate_format(:zipcode, ~r/[0-9]+/)
     |> validate_length(:zipcode, max: 9)
-    |> validate_format(:phone, ~r/[0..9]+/)
+    |> validate_format(:phone, ~r/[0-9]+/)
     |> validate_length(:phone, max: 10)
   end
 end

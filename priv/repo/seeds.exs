@@ -14,6 +14,8 @@ alias Minishop.Repo
 alias Minishop.Product
 alias Minishop.Pay_Type
 alias Minishop.Category
+alias Minishop.User
+alias Minishop.Address
 
 import Ecto.Query
 
@@ -65,17 +67,23 @@ end
 # alias Todo.Task
 # import Ecto.Query
 #
-# user_params = %{name: "Deanch", username: "deanch", password: "deanch"}
-# changeset = User.registration_changeset(%User{}, user_params)
-# Repo.get_by(User, username: "deanch") ||
-#   Repo.insert!(changeset)
+user_params = %{name: "Deanch", username: "deanch", password: "deanch"}
+changeset = User.registration_changeset(%User{}, user_params)
+Repo.get_by(User, username: "deanch") ||
+  Repo.insert!(changeset)
 #
-# user = Repo.get_by(User, username: "deanch")
-# attrs = %{date: "2014/06/12", title: "Shopping"}
-# task = Ecto.build_assoc(user, :tasks, attrs)
-# Repo.get_by(Task, user_id: user.id) ||
-#   Repo.insert!(task)
+user = Repo.get_by(User, username: "deanch")
+address_params = %{address1: "90 Elm Street", address2: "Suite 200",
+  city: "Boston", state: "MA", zipcode: "12549", phone: "1234567890"}
+address = Ecto.build_assoc(user, :addresses, address_params)
+Repo.get_by(Address, address1: address.address1) ||
+  Repo.insert!(address)
 #
+address_params = %{address1: "88 Dune Road", address2: "Apt. 4",
+  city: "Dennis", state: "MA", zipcode: "05389", phone: "6784567890"}
+address = Ecto.build_assoc(user, :addresses, address_params)
+Repo.get_by(Address, address1: address.address1) ||
+  Repo.insert!(address)
 # for priority <- ~w(Low Medium High Ongoing) do
 #   Repo.get_by(Priority, name: priority) ||
 #     Repo.insert!(%Priority{name: priority})

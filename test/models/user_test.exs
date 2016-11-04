@@ -2,7 +2,8 @@ defmodule Minishop.UserTest do
   use Minishop.ModelCase, asycn: true
   alias Minishop.User
 
-  @valid_attrs %{name: "A User", username: "eva", password: "secret"}
+  @valid_attrs %{name: "A User", username: "eva", password: "secret", email:
+    "test@test.com"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

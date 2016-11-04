@@ -2,7 +2,7 @@ defmodule Minishop.UserRepoTest do
   use Minishop.ModelCase
   alias Minishop.User
 
-  @valid_attrs %{name: "A User", username: "eva"}
+  @valid_attrs %{name: "A User", username: "eva", email: "test@test.com"}
 
   test "converts unique_constraint on username to error" do
     insert_user(username: "eric")

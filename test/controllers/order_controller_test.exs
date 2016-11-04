@@ -3,6 +3,7 @@ defmodule Minishop.OrderControllerTest do
 
   alias Minishop.Order
   alias Minishop.Pay_Type
+  alias Minishop.Address
 #  @valid_attrs %{address: "some content", email: "some content", name: "some
 #  content"}
   @valid_attrs %{}
@@ -11,8 +12,18 @@ defmodule Minishop.OrderControllerTest do
   setup %{user: user} do
     {:ok, pay_type} = Pay_Type.changeset(%Pay_Type{}, %{code: "cc",
       description: "Credit Card"}) |> Repo.insert
-    valid_attrs = Dict.merge(%{pay_type_id: pay_type.id, user_id: user.id}, @valid_attrs)
-    {:ok, valid_attrs: valid_attrs}
+
+    if user.id  != nil do
+      {:ok, ship_address} = Address.changeset(%Address{}, %{address1:
+        "1 Test St.", city: "Boston", state: "MA", zipcode: "12345", user_id:
+        user.id}) |> Repo.insert
+
+      valid_attrs = Dict.merge(%{pay_type_id: pay_type.id, user_id: user.id,
+        ship_address_id: ship_address.id}, @valid_attrs)
+      {:ok, valid_attrs: valid_attrs}
+    else
+      {:ok, user: user}
+    end
   end
 
   test "requires user authentication on all actions", %{conn: conn} do

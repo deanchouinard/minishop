@@ -13,7 +13,7 @@ defmodule Minishop.User do
     timestamps
   end
 
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ %{}) do
     model
     |> cast(params, ~w(name username email), [])
     |> validate_length(:username, min: 1, max: 20)

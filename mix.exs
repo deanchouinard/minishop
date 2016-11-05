@@ -4,7 +4,7 @@ defmodule Minishop.Mixfile do
   def project do
     [app: :minishop,
      version: "0.0.1",
-     elixir: "~> 1.0",
+     elixir: "~> 1.3.0",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
@@ -18,7 +18,7 @@ defmodule Minishop.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Minishop, []},
-     applications: [:phoenix, :phoenix_html, :cowboy, :logger,
+     applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger,
                     :gettext, :phoenix_ecto, :postgrex, :gproc,
                     :comeonin ]]
   end
@@ -31,15 +31,17 @@ defmodule Minishop.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.1.6"},
+    [{:phoenix, "~> 1.2.0"},
+     {:phoenix_pubsub, "~> 1.0"},
      {:postgrex, ">= 0.0.0"},
-     {:phoenix_ecto, "~> 2.0.2"},
-     {:phoenix_html, "~> 2.6.2"},
+     {:phoenix_ecto, "~> 3.0"},
+     {:phoenix_html, "~> 2.6"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
-     {:gettext, "~> 0.9"},
+     {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
-     {:monetized, "~> 0.4.0"},
-     {:decimal, "~> 1.1.2"},
+     #{:monetized, "~> 0.4.0"},
+     {:monetized, github:  "deanchouinard/monetized"},
+     {:decimal, "~> 1.2"},
      {:gproc, "0.3.1"},
      {:comeonin, "~> 2.0"}
    ]
@@ -54,5 +56,6 @@ defmodule Minishop.Mixfile do
   defp aliases do
     ["ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
      "ecto.reset": ["ecto.drop", "ecto.setup"]]
+     #     "test": ["ecto.create --quiet", "ecto.migrate --quiet", "test"]]
   end
 end

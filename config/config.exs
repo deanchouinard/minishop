@@ -5,12 +5,14 @@
 # is restricted to this project.
 use Mix.Config
 
+config :minishop, ecto_repos: [Minishop.Repo]
 # Configures the endpoint
 config :minishop, Minishop.Endpoint,
   url: [host: "localhost"],
-  root: Path.dirname(__DIR__),
+  #  root: Path.dirname(__DIR__),
   secret_key_base: "RSlhQpxDjtW1J2qEZjk26t1t8t/Upbar/VQhNqqEW6kVfBrbmJGxZFZ19p2CYVVr",
-  render_errors: [accepts: ~w(html json)],
+  #render_errors: [accepts: ~w(html json)],
+  render_errors: [view: Minishop.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Minishop.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
@@ -27,3 +29,6 @@ import_config "#{Mix.env}.exs"
 config :phoenix, :generators,
   migration: true,
   binary_id: false
+
+
+config :minishop, namespace: Minishop

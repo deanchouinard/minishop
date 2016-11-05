@@ -37,11 +37,17 @@ defmodule Minishop.ConnCase do
   end
 
   setup tags do
+    # unless tags[:async] do
+    #   Ecto.Adapters.SQL.restart_test_transaction(Minishop.Repo, [])
+    # end
+    
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Minishop.Repo)
+
     unless tags[:async] do
-      Ecto.Adapters.SQL.restart_test_transaction(Minishop.Repo, [])
+      Ecto.Adapters.SQL.Sandbox.mode(Minishop.Repo, {:shared, self()})
     end
 
-    conn = Phoenix.ConnTest.conn()
+    conn = Phoenix.ConnTest.build_conn()
 
     if username = tags[:login_as] do
       user = insert_user(username: username)
@@ -49,7 +55,7 @@ defmodule Minishop.ConnCase do
       {:ok, conn: conn, user: user}
     else
       {:ok, conn: conn, user: %Minishop.User{}}
-      #{:ok, conn: Phoenix.ConnTest.conn()}
+      #{:ok, conn: Phoenix.ConnTest.build_conn()}
     end
   end
 end

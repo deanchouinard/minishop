@@ -31,6 +31,8 @@
   </li>
 
 </ul>
+<%= form_for @conn, cart_path(@conn, :add_to_cart, [as: :add_cart], fn f ->  %>
+<%=# use a different function name for this implementation  %>
         <%= link "Add to Cart", to: cart_path(@conn, :add_to_cart,
         @product.id), class: "btn btn-default btn-xs" %>
     </div>

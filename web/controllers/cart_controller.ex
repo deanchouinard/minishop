@@ -2,6 +2,14 @@ defmodule Minishop.CartController do
   use Minishop.Web, :controller
   require Logger
 
+  def add_item(conn, %{"add_item" => %{"qty" => qt2, "id" => prod_id}}) do
+    # %{"qty" => qt2} = qty
+    IO.inspect qt2
+    IO.inspect prod_id
+    IO.inspect conn.assigns
+    redirect(conn, to: page_path(conn, :index))
+  end
+
   def add_to_cart(conn, %{"id" => prod_id}) do
     prod = %{qty: 1, product_id: String.to_integer(prod_id)}
     IO.inspect(prod)

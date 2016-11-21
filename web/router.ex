@@ -30,6 +30,7 @@ defmodule Minishop.Router do
     get "/session/clear", SessionController, :clear
     #    get "/session/add_cart/:title", SessionController, :add_to_cart
     get "/cart/add_cart/:id", CartController, :add_to_cart
+    post "/cart/add_item", CartController, :add_item
 
     get "/store", StoreController, :index
     get "/store/checkout", StoreController, :checkout

@@ -31,10 +31,17 @@
   </li>
 
 </ul>
-<%= form_for @conn, cart_path(@conn, :add_to_cart, [as: :add_cart], fn f ->  %>
+<% conn = add_pid(@conn, @product.id) %>
+
+<%= form_for @conn, cart_path(@conn, :add_item), [as: :add_item], fn f ->  %>
 <%=# use a different function name for this implementation  %>
-        <%= link "Add to Cart", to: cart_path(@conn, :add_to_cart,
-        @product.id), class: "btn btn-default btn-xs" %>
+<%= hidden_input(f, :id, [value: @product.id]) %>
+<%= label(f, :qty, "Qty: ", class: "control-label") %>
+<%= select(f, :qty, 1..10 ) %>
+<%= submit "Add Item", [class: "btn btn-default btn-xs"]%>
+<% end %>
+        <%= #link "Add to Cart", to: cart_path(@conn, :add_to_cart,
+        # @product.id), class: "btn btn-default btn-xs" %>
     </div>
 
     <div class="col-md-3">

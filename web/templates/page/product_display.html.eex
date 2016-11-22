@@ -29,9 +29,8 @@
     <strong>Price:</strong>
     <%= @product.price %>
   </li>
-
+  <%= @conn.assigns.product.id %>
 </ul>
-<% conn = add_pid(@conn, @product.id) %>
 
 <%= form_for @conn, cart_path(@conn, :add_item), [as: :add_item], fn f ->  %>
 <%=# use a different function name for this implementation  %>

@@ -6,7 +6,8 @@ defmodule Minishop.CartController do
     # %{"qty" => qt2} = qty
     IO.inspect qt2
     IO.inspect prod_id
-    IO.inspect conn.assigns
+#    IO.inspect conn.assigns.product_id
+    IO.inspect conn
     redirect(conn, to: page_path(conn, :index))
   end
 

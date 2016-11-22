@@ -30,6 +30,8 @@ defmodule Minishop.PageController do
   def display_product(conn, %{"id" => prod_id}) do
     product = Repo.one from p in Product, where: p.id == ^prod_id
 
+    conn = assign(conn, :product_id, product.id)
+
     render conn, "product_display.html", product: product
   end
 

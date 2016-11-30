@@ -67,7 +67,8 @@ end
 # alias Todo.Task
 # import Ecto.Query
 #
-user_params = %{name: "Deanch", username: "deanch", password: "deanch"}
+user_params = %{name: "Deanch", username: "deanch", password: "deanch",
+  email: "deanch@test.com"}
 changeset = User.registration_changeset(%User{}, user_params)
 Repo.get_by(User, username: "deanch") ||
   Repo.insert!(changeset)

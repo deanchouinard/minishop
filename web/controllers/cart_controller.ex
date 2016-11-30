@@ -7,7 +7,9 @@ defmodule Minishop.CartController do
     IO.inspect qt2
     IO.inspect prod_id
 #    IO.inspect conn.assigns.product_id
-    IO.inspect conn
+#    IO.inspect conn
+    prod = %{qty: qt2, product_id: prod_id}
+    conn = add_prod_to_cart(conn, prod)
     redirect(conn, to: page_path(conn, :index))
   end
 

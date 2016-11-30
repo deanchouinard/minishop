@@ -34,7 +34,7 @@ defmodule TcartTest do
       #    IO.inspect Tcart.Server.list(ref)
     :timer.sleep(500)
 
-    item_count = Repo.one from s in Minishop.Session,
+    item_count = Repo.one from s in Minishop.Cart,
                     select: count(s.id),
                     where: s.key == "AAAB"
     
@@ -65,7 +65,7 @@ defmodule TcartTest do
     #   Tcart.Server.line_items(ref2, 4)
 
     :timer.sleep(500)
-    ic = Repo.one from s in Minishop.Session,
+    ic = Repo.one from s in Minishop.Cart,
                     select: count(s.id),
                     where: s.key == "AAAB"
 

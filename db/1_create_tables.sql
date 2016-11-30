@@ -268,10 +268,10 @@ CREATE TABLE schema_migrations (
 ALTER TABLE public.schema_migrations OWNER TO postgres;
 
 --
--- Name: sessions; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: carts; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-CREATE TABLE sessions (
+CREATE TABLE carts (
     id integer NOT NULL,
     key character varying(255) NOT NULL,
     inserted_at timestamp without time zone NOT NULL,
@@ -279,28 +279,18 @@ CREATE TABLE sessions (
     cart_data bytea
 );
 
+ALTER TABLE public.carts OWNER TO postgres;
 
-ALTER TABLE public.sessions OWNER TO postgres;
-
---
--- Name: sessions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE sessions_id_seq
+CREATE SEQUENCE carts_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
 
+ALTER TABLE public.carts_id_seq OWNER TO postgres;
 
-ALTER TABLE public.sessions_id_seq OWNER TO postgres;
-
---
--- Name: sessions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE sessions_id_seq OWNED BY sessions.id;
+ALTER SEQUENCE carts_id_seq OWNED BY carts.id;
 
 
 --
@@ -335,7 +325,7 @@ ALTER TABLE ONLY products ALTER COLUMN id SET DEFAULT nextval('products_id_seq':
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY sessions ALTER COLUMN id SET DEFAULT nextval('sessions_id_seq'::regclass);
+ALTER TABLE ONLY carts ALTER COLUMN id SET DEFAULT nextval('carts_id_seq'::regclass);
 
 
 --
@@ -377,13 +367,8 @@ ALTER TABLE ONLY products
 ALTER TABLE ONLY schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
 
-
---
--- Name: sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY sessions
-    ADD CONSTRAINT sessions_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY carts
+    ADD CONSTRAINT carts_pkey PRIMARY KEY (id);
 
 
 --
@@ -407,11 +392,7 @@ CREATE INDEX line_items_product_id_index ON line_items USING btree (product_id);
 CREATE UNIQUE INDEX pay_types_code_index ON pay_types USING btree (code);
 
 
---
--- Name: sessions_key_index; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE UNIQUE INDEX sessions_key_index ON sessions USING btree (key);
+CREATE UNIQUE INDEX carts_key_index ON carts USING btree (key);
 
 
 --

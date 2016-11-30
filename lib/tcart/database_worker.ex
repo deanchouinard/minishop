@@ -2,7 +2,7 @@ defmodule Tcart.DatabaseWorker do
   use GenServer
 
   alias Minishop.Repo
-  alias Minishop.Session
+  alias Minishop.Cart
 
   def start_link(worker_id) do
     IO.puts "Starting database worker #{worker_id}."
@@ -24,13 +24,13 @@ defmodule Tcart.DatabaseWorker do
 
   def handle_cast({:store, key, data}, _) do
 
-    case session = Repo.get_by(Session, key: key) do
-      nil -> Repo.insert!(%Session{key: key,
+    case session = Repo.get_by(Cart, key: key) do
+      nil -> Repo.insert!(%Cart{key: key,
               cart_data: :erlang.term_to_binary(data)})
             IO.puts "Key #{key} inserted"
 
-            # session -> changeset = Session.changeset(session,
-      _ -> changeset = Session.changeset(session,
+            # session -> changeset = Cart.changeset(session,
+      _ -> changeset = Cart.changeset(session,
                    %{cart_data: :erlang.term_to_binary(data)})
         Repo.update(changeset)
         IO.puts "Key #{key} saved"
@@ -41,7 +41,7 @@ defmodule Tcart.DatabaseWorker do
   end
 
   def handle_call({:get, key}, _, _) do
-    cart_data = case Repo.get_by(Session, key: key) do
+    cart_data = case Repo.get_by(Cart, key: key) do
       nil -> nil
       #%{cart_data: cart_data} = contents -> :erlang.binary_to_term(cart_data)
       %{cart_data: cart_data} -> :erlang.binary_to_term(cart_data)
